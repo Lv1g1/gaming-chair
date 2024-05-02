@@ -72,12 +72,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)build\</OutDir>
-    <IntDir>$(ShortProjectName)build\intermediates</IntDir>
+    <IntDir>$(ShortProjectName)build\intermediates\</IntDir>
     <IncludePath>C:\Users\luigi\source\repos\gaming chair\external dependencies;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)build\</OutDir>
-    <IntDir>$(ShortProjectName)build\intermediates</IntDir>
+    <IntDir>$(ShortProjectName)build\intermediates\</IntDir>
     <IncludePath>C:\Users\luigi\source\repos\gaming chair\external dependencies;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -141,7 +141,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="external dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="external dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external dependencies\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="external dependencies\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="external dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\gui.cpp" />
+    <ClCompile Include="src\gui.h" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\memory\process.cpp" />
+    <ClCompile Include="src\server\server.cpp" />
+    <ClCompile Include="src\utils\vector.cpp" />
+    <ClCompile Include="src\utils\view_matrix.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external dependencies\imgui\imconfig.h" />
+    <ClInclude Include="external dependencies\imgui\imgui.h" />
+    <ClInclude Include="external dependencies\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="external dependencies\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="external dependencies\imgui\imgui_internal.h" />
+    <ClInclude Include="external dependencies\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external dependencies\imgui\imstb_textedit.h" />
+    <ClInclude Include="external dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\memory\driver.h" />
+    <ClInclude Include="src\memory\process.h" />
+    <ClInclude Include="src\memory\offsets.h" />
+    <ClInclude Include="src\server\server.h" />
+    <ClInclude Include="src\settings.h" />
+    <ClInclude Include="src\utils\bone_matrix.h" />
+    <ClInclude Include="src\utils\vector.h" />
+    <ClInclude Include="src\utils\view_matrix.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\server\index.html" />
+    <None Include="src\webserver\resources\index.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Parameter</title>
+</head>
+<body>
+    <h1>Update Parameter</h1>
+    <form id="updateForm">
+        <label for="parameterInput">New Parameter Value:</label>
+        <input type="text" id="parameterInput" name="parameterInput">
+        <button type="submit">Update</button>
+    </form>
+
+    <script>document.getElementById("updateForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get the value from the input field
+            var newValue = document.getElementById("parameterInput").value;
+
+            // Send a POST request to update the parameter
+            fetch('http://localhost:8080', {
+                method: 'POST',
+                body: newValue
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update parameter');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data); // Show success message
+            })
+            .catch(error => {
+                console.error('Error updating parameter:', error);
+                alert('Error updating parameter. Please try again.');
+            });
+        });</script>
+</body>
+</html>
