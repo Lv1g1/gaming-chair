@@ -10,5 +10,6 @@ C:\Users\luigi\source\repos\gaming chair\src\gui.h;C:\Users\luigi\source\repos\g
 C:\Users\luigi\source\repos\gaming chair\src\main.cpp;C:\Users\luigi\source\repos\gaming chair\gaming chairbuild\intermediates\main.obj
 C:\Users\luigi\source\repos\gaming chair\src\memory\process.cpp;C:\Users\luigi\source\repos\gaming chair\gaming chairbuild\intermediates\process.obj
 C:\Users\luigi\source\repos\gaming chair\src\server\server.cpp;C:\Users\luigi\source\repos\gaming chair\gaming chairbuild\intermediates\server.obj
+C:\Users\luigi\source\repos\gaming chair\src\settings.cpp;C:\Users\luigi\source\repos\gaming chair\gaming chairbuild\intermediates\settings.obj
 C:\Users\luigi\source\repos\gaming chair\src\utils\vector.cpp;C:\Users\luigi\source\repos\gaming chair\gaming chairbuild\intermediates\vector.obj
 C:\Users\luigi\source\repos\gaming chair\src\utils\view_matrix.cpp;C:\Users\luigi\source\repos\gaming chair\gaming chairbuild\intermediates\view_matrix.obj

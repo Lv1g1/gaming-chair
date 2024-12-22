@@ -1,10 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include <WinSock2.h>
-#include <fstream>
 #include <sstream>
-#include <thread>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -14,11 +11,12 @@ public:
     ~Server();
 
     void start(int port);
+	void stop();
+	bool is_running();
 
 private:
-    std::string readFile(const std::string& filename);
-    std::string extractPostData(const std::string& request);
     void handleClient(SOCKET clientSocket);
 
     SOCKET serverSocket;
+	bool running;
 };

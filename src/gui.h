@@ -15,10 +15,6 @@
 
 #define Vec ImVec2
 
-constexpr ImU32 Color(int r, int g, int b, int a) noexcept {
-	return IM_COL32(r, g, b, a);
-}
-
 #define drawCircle ImGui::GetBackgroundDrawList()->AddCircle
 #define drawRect ImGui::GetBackgroundDrawList()->AddRect
 #define drawLine ImGui::GetBackgroundDrawList()->AddLine

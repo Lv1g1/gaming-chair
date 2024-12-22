@@ -153,6 +153,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\memory\process.cpp" />
     <ClCompile Include="src\server\server.cpp" />
+    <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\utils\vector.cpp" />
     <ClCompile Include="src\utils\view_matrix.cpp" />
   </ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="src\server\server.h" />
     <ClInclude Include="src\settings.h" />
     <ClInclude Include="src\utils\bone_matrix.h" />
+    <ClInclude Include="src\utils\debug.h" />
     <ClInclude Include="src\utils\vector.h" />
     <ClInclude Include="src\utils\view_matrix.h" />
   </ItemGroup>

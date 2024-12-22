@@ -28,7 +28,7 @@ bool GUI::init() noexcept
 	wc = { sizeof(WNDCLASSEXW), CS_HREDRAW | CS_VREDRAW, WndProc, 0L, 0L, instance, NULL, NULL, NULL, NULL,  L"Overlay", NULL };
 	RegisterClassExW(&wc);
 
-	hWnd = CreateWindowExW(WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST, wc.lpszClassName, L"Overlay", WS_POPUP, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, nullptr, nullptr, instance, nullptr);
+	hWnd = CreateWindowExW(WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST, wc.lpszClassName, L"Overlay", WS_POPUP, 0, 0, settings->DISPLAY_WIDTH, settings->DISPLAY_HEIGHT, nullptr, nullptr, instance, nullptr);
 
 	if (!hWnd) {
 		return false;

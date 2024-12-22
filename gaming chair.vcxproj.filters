@@ -54,10 +54,10 @@
     <ClCompile Include="src\memory\process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\webserver\http_server.cpp">
+    <ClCompile Include="src\server\server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\server\server.cpp">
+    <ClCompile Include="src\settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,10 +107,10 @@
     <ClInclude Include="src\utils\bone_matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\webserver\http_server.h">
+    <ClInclude Include="src\server\server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\server\server.h">
+    <ClInclude Include="src\utils\debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,50 +1,73 @@
 #pragma once
 
-// Display settings
-constexpr auto DISPLAY_WIDTH = 1920;
-constexpr auto DISPLAY_HEIGHT = 1080;
+// Color struct
+#include <imgui/imgui.h>
+#include <iostream>
+typedef struct {
+	uint8_t r, g, b, a;
+} Color;
 
-// Cheat Settings
-constexpr auto WALLHACK_DRAW_BOX = 1;
-constexpr auto WALLHACK_DRAW_BONES = 1;
-constexpr auto WALLHACK_DRAW_HEALTH_BAR = 1;
-constexpr auto WALLHACK_DRAW_HEAD = 1;
-constexpr auto WALLHACK_DRAW_TEXT = 1;
+#define BOX_COLOR IM_COL32(settings->BOX_COLOR_struct.r, settings->BOX_COLOR_struct.g, settings->BOX_COLOR_struct.b, settings->BOX_COLOR_struct.a)
+#define BONES_COLOR IM_COL32(settings->BONES_COLOR_struct.r, settings->BONES_COLOR_struct.g, settings->BONES_COLOR_struct.b, settings->BONES_COLOR_struct.a)
+#define HEAD_COLOR IM_COL32(settings->HEAD_COLOR_struct.r, settings->HEAD_COLOR_struct.g, settings->HEAD_COLOR_struct.b, settings->HEAD_COLOR_struct.a)
+#define TEXT_COLOR IM_COL32(settings->TEXT_COLOR_struct.r, settings->TEXT_COLOR_struct.g, settings->TEXT_COLOR_struct.b, settings->TEXT_COLOR_struct.a)
+#define AIMBOT_FOV_COLOR IM_COL32(settings->AIMBOT_FOV_COLOR_struct.r, settings->AIMBOT_FOV_COLOR_struct.g, settings->AIMBOT_FOV_COLOR_struct.b, settings->AIMBOT_FOV_COLOR_struct.a)
 
-constexpr auto WALLHACK_DRAW_BOX_WHEN_SPOTTED = 1;
-constexpr auto WALLHACK_DRAW_BONES_WHEN_SPOTTED = 0;
-constexpr auto WALLHACK_DRAW_HEALTH_BAR_WHEN_SPOTTED = 1;
-constexpr auto WALLHACK_DRAW_HEAD_WHEN_SPOTTED = 0;
-constexpr auto WALLHACK_DRAW_TEXT_WHEN_SPOTTED = 1;
+typedef struct {
+	// Server settings
+	int SERVER_PORT;
 
-constexpr auto AIMBOT_ENABLED = 1; // only aim when the player is spotted
-constexpr auto AIMBOT_ENABLED_WHEN_NOT_SPOTTED = 0;
+    // Display settings
+	int DISPLAY_WIDTH;
+	int DISPLAY_HEIGHT;
 
-// Wallhack settings
-constexpr auto WALLHACK_KEY = VK_F1; //Va aggiunta
+	// Cheat Settings
+	bool DRAW_BOX;
+	bool DRAW_BONES;
+	bool DRAW_HEALTH_BAR;
+	bool DRAW_HEAD;
+	bool DRAW_TEXT;
 
-constexpr auto WALLHACK_BOX_HEIGHT = 75.0f;
-constexpr auto WALLHACK_BOX_HEIGHT_WIDTH_RATIO = 0.4f;
-#define WALLHACK_BOX_COLOR 0, 0, 0, 255
-constexpr auto WALLHACK_BOX_THICKNESS = 1.0f;
+	bool DRAW_BOX_WHEN_SPOTTED;
+	bool DRAW_BONES_WHEN_SPOTTED;
+	bool DRAW_HEALTH_BAR_WHEN_SPOTTED;
+	bool DRAW_HEAD_WHEN_SPOTTED;
+	bool DRAW_TEXT_WHEN_SPOTTED;
 
-#define WALLHACK_BONES_COLOR 255, 0, 0, 255
-constexpr auto WALLHACK_BONES_THICKNESS = 1.0f;
+	bool AIMBOT_ENABLED; // only aim when the player is spotted
+	bool AIMBOT_ENABLED_WHEN_NOT_SPOTTED;
 
-constexpr auto WALLHACK_HEALTH_BAR_THICKNESS = 2.0f;
+	// Wallhack settings
+	float BOX_HEIGHT;
+	float BOX_HEIGHT_WIDTH_RATIO;
+	Color BOX_COLOR_struct;
+	float BOX_THICKNESS;
 
-constexpr auto WALLHACK_HEAD_RADIUS = 2.0f;
-#define WALLHACK_HEAD_COLOR 0, 0, 255, 255
+	Color BONES_COLOR_struct;
+	float BONES_THICKNESS;
 
-#define  WALLHACK_TEXT_COLOR 255, 255, 255, 255
-constexpr auto WALLHACK_TEXT_THICKNESS = 2.0f;
+	float HEALTH_BAR_THICKNESS;
 
-// Aimbot settings
-constexpr auto AIMBOT_KEY = VK_RBUTTON; //Va aggiunta
+	float HEAD_RADIUS;
+	Color HEAD_COLOR_struct;
 
-constexpr auto AIMBOT_FOV = 10.0f;
+	Color TEXT_COLOR_struct;
+	float TEXT_THICKNESS;
 
-constexpr auto AIMBOT_DRAW_FOV = 1;
-#define AIMBOT_DRAW_FOV_COLOR 255, 255, 255, 255
+	// Aimbot settings
+	float AIMBOT_FOV;
 
-constexpr auto AIMBOT_SMOOTH = 0.1f;
+	bool AIMBOT_DRAW_FOV;
+	Color AIMBOT_FOV_COLOR_struct;
+
+	int AIMBOT_SMOOTH;
+} Settings;
+
+extern char WORKING_DIR[256];
+extern Settings *settings;
+
+bool validate_settings(Settings s);
+void load_settings();
+void save_settings();
+bool modify_settings(Settings s);
+void refresh_settings();

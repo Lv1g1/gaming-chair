@@ -3,40 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Parameter</title>
+    <title>Cheat Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .settingsSection, .wallhackSection, .aimbotSection, .programSection {
+            margin-bottom: 20px;
+        }
+
+        input[type="checkbox"], input[type="color"] {
+            margin-left: 5px;
+        }
+
+        input[type="number"], select {
+            width: calc(100% - 25px);
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .submitSection {
+            text-align: center;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+        }
+
+            .input-row input[type="color"] {
+                width: auto;
+                margin-left: 5px;
+            }
+    </style>
 </head>
 <body>
-    <h1>Update Parameter</h1>
-    <form id="updateForm">
-        <label for="parameterInput">New Parameter Value:</label>
-        <input type="text" id="parameterInput" name="parameterInput">
-        <button type="submit">Update</button>
+    <h2>Cheat Settings</h2>
+
+    <form id="settingsForm">
+        <section class="programSection">
+            <h3>Program Settings</h3>
+
+            <label for="SERVER_PORT">SERVER_PORT:</label>
+            <input type="number" id="SERVER_PORT" name="SERVER_PORT" value=<!-- SERVER_PORT -->><br>
+
+            <label for="DISPLAY_WIDTH">DISPLAY_WIDTH:</label>
+            <input type="number" id="DISPLAY_WIDTH" name="DISPLAY_WIDTH" value=<!-- DISPLAY_WIDTH -->><br>
+
+            <label for="DISPLAY_HEIGHT">DISPLAY_HEIGHT:</label>
+            <input type="number" id="DISPLAY_HEIGHT" name="DISPLAY_HEIGHT" value=<!-- DISPLAY_HEIGHT -->><br>
+        </section>
+        
+        <section class="settingsSection">
+            <h3>Cheat Settings</h3>
+            
+            <label for="DRAW_BOX">DRAW_BOX:</label>
+            <input type="checkbox" id="DRAW_BOX" name="DRAW_BOX" <!-- DRAW_BOX -->><br>
+
+            <label for="DRAW_BONES">DRAW_BONES:</label>
+            <input type="checkbox" id="DRAW_BONES" name="DRAW_BONES" <!-- DRAW_BONES -->><br>
+
+            <label for="DRAW_HEALTH_BAR">DRAW_HEALTH_BAR:</label>
+            <input type="checkbox" id="DRAW_HEALTH_BAR" name="DRAW_HEALTH_BAR" <!-- DRAW_HEALTH_BAR -->><br>
+
+            <label for="DRAW_HEAD">DRAW_HEAD:</label>
+            <input type="checkbox" id="DRAW_HEAD" name="DRAW_HEAD" <!-- DRAW_HEAD -->><br>
+
+            <label for="DRAW_TEXT">DRAW_TEXT:</label>
+            <input type="checkbox" id="DRAW_TEXT" name="DRAW_TEXT" <!-- DRAW_TEXT -->><br>
+
+            <label for="DRAW_BOX_WHEN_SPOTTED">DRAW_BOX_WHEN_SPOTTED:</label>
+            <input type="checkbox" id="DRAW_BOX_WHEN_SPOTTED" name="DRAW_BOX_WHEN_SPOTTED" <!-- DRAW_BOX_WHEN_SPOTTED -->><br>
+
+            <label for="DRAW_BONES_WHEN_SPOTTED">DRAW_BONES_WHEN_SPOTTED:</label>
+            <input type="checkbox" id="DRAW_BONES_WHEN_SPOTTED" name="DRAW_BONES_WHEN_SPOTTED" <!-- DRAW_BONES_WHEN_SPOTTED -->><br>
+
+            <label for="DRAW_HEALTH_BAR_WHEN_SPOTTED">DRAW_HEALTH_BAR_WHEN_SPOTTED:</label>
+            <input type="checkbox" id="DRAW_HEALTH_BAR_WHEN_SPOTTED" name="DRAW_HEALTH_BAR_WHEN_SPOTTED" <!-- DRAW_HEALTH_BAR_WHEN_SPOTTED -->><br>
+
+            <label for="DRAW_HEAD_WHEN_SPOTTED">DRAW_HEAD_WHEN_SPOTTED:</label>
+            <input type="checkbox" id="DRAW_HEAD_WHEN_SPOTTED" name="DRAW_HEAD_WHEN_SPOTTED" <!-- DRAW_HEAD_WHEN_SPOTTED -->><br>
+
+            <label for="DRAW_TEXT_WHEN_SPOTTED">DRAW_TEXT_WHEN_SPOTTED:</label>
+            <input type="checkbox" id="DRAW_TEXT_WHEN_SPOTTED" name="DRAW_TEXT_WHEN_SPOTTED" <!-- DRAW_TEXT_WHEN_SPOTTED -->><br>
+
+            <label for="AIMBOT_ENABLED">AIMBOT_ENABLED:</label>
+            <input type="checkbox" id="AIMBOT_ENABLED" name="AIMBOT_ENABLED" <!-- AIMBOT_ENABLED -->><br>
+
+            <label for="AIMBOT_ENABLED_WHEN_NOT_SPOTTED">AIMBOT_ENABLED_WHEN_NOT_SPOTTED:</label>
+            <input type="checkbox" id="AIMBOT_ENABLED_WHEN_NOT_SPOTTED" name="AIMBOT_ENABLED_WHEN_NOT_SPOTTED" <!-- AIMBOT_ENABLED_WHEN_NOT_SPOTTED -->><br>
+        </section>
+
+        <section class="wallhackSection">
+            <h3>Wallhack Settings</h3>
+
+            <label for="BOX_HEIGHT">BOX_HEIGHT:</label>
+            <input type="number" id="BOX_HEIGHT" name="BOX_HEIGHT" value=<!-- BOX_HEIGHT -->><br>
+
+            <label for="BOX_HEIGHT_WIDTH_RATIO">BOX_HEIGHT_WIDTH_RATIO:</label>
+            <input type="number" id="BOX_HEIGHT_WIDTH_RATIO" name="BOX_HEIGHT_WIDTH_RATIO" value=<!-- BOX_HEIGHT_WIDTH_RATIO -->><br>
+
+            <label for="BOX_COLOR">BOX_COLOR:</label>
+            <input type="color" id="BOX_COLOR" name="BOX_COLOR" value=<!-- BOX_COLOR -->><br>
+
+            <label for="BOX_THICKNESS">BOX_THICKNESS:</label>
+            <input type="number" id="BOX_THICKNESS" name="BOX_THICKNESS" value=<!-- BOX_THICKNESS -->><br>
+
+            <label for="BONES_COLOR">BONES_COLOR:</label>
+            <input type="color" id="BONES_COLOR" name="BONES_COLOR" value=<!-- BONES_COLOR -->><br>
+
+            <label for="BONES_THICKNESS">BONES_THICKNESS:</label>
+            <input type="number" id="BONES_THICKNESS" name="BONES_THICKNESS" value=<!-- BONES_THICKNESS -->><br>
+
+            <label for="HEALTH_BAR_THICKNESS">HEALTH_BAR_THICKNESS:</label>
+            <input type="number" id="HEALTH_BAR_THICKNESS" name="HEALTH_BAR_THICKNESS" value=<!-- HEALTH_BAR_THICKNESS -->><br>
+
+            <label for="HEAD_RADIUS">HEAD_RADIUS:</label>
+            <input type="number" id="HEAD_RADIUS" name="HEAD_RADIUS" value=<!-- HEAD_RADIUS -->><br>
+
+            <label for="HEAD_COLOR">HEAD_COLOR:</label>
+            <input type="color" id="HEAD_COLOR" name="HEAD_COLOR" value=<!-- HEAD_COLOR -->><br>
+
+            <label for="TEXT_COLOR">TEXT_COLOR:</label>
+            <input type="color" id="TEXT_COLOR" name="TEXT_COLOR" value=<!-- TEXT_COLOR -->><br>
+
+            <label for="TEXT_THICKNESS">TEXT_THICKNESS:</label>
+            <input type="number" id="TEXT_THICKNESS" name="TEXT_THICKNESS" value=<!-- TEXT_THICKNESS -->><br>
+        </section>
+
+        <section class="aimbotSection">
+            <h3>Aimbot Settings</h3>
+
+            <label for="AIMBOT_KEY">AIMBOT_KEY:</label>
+            <select id="AIMBOT_KEY" name="AIMBOT_KEY">
+                <option value="VK_RBUTTON">Right Mouse Button</option>
+                <!-- Add more options here if needed -->
+            </select><br>
+
+            <label for="AIMBOT_FOV">AIMBOT_FOV:</label>
+            <input type="number" id="AIMBOT_FOV" name="AIMBOT_FOV" value=<!-- AIMBOT_FOV -->><br>
+
+            <label for="AIMBOT_DRAW_FOV">AIMBOT_DRAW_FOV:</label>
+            <input type="checkbox" id="AIMBOT_DRAW_FOV" name="AIMBOT_DRAW_FOV" <!-- AIMBOT_DRAW_FOV -->><br>
+
+            <label for="AIMBOT_FOV_COLOR">AIMBOT_FOV_COLOR:</label>
+            <input type="color" id="AIMBOT_FOV_COLOR" name="AIMBOT_FOV_COLOR" value=<!-- AIMBOT_FOV_COLOR -->><br>
+
+            <label for="AIMBOT_SMOOTH">AIMBOT_SMOOTH:</label>
+            <input type="number" id="AIMBOT_SMOOTH" name="AIMBOT_SMOOTH" value=<!-- AIMBOT_SMOOTH -->><br>
+        </section>
+
+        <section class="submitSection">
+            <button type="button" onclick="sendSettings()">Submit</button>
+        </section>
     </form>
 
-    <script>document.getElementById("updateForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+    <script>
+        function sendSettings() {
+            const form = document.getElementById("settingsForm");
+            const formData = new FormData(form);
 
-            // Get the value from the input field
-            var newValue = document.getElementById("parameterInput").value;
-
-            // Send a POST request to update the parameter
-            fetch('http://localhost:8080', {
-                method: 'POST',
-                body: newValue
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to update parameter');
+            form.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                if (!checkbox.checked) {
+                    formData.append(checkbox.name, "off");
                 }
-                return response.text();
-            })
-            .then(data => {
-                alert(data); // Show success message
-            })
-            .catch(error => {
-                console.error('Error updating parameter:', error);
-                alert('Error updating parameter. Please try again.');
             });
-        });</script>
+
+            fetch('http://localhost:12345', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text;
+                })
+                .then(data => {
+                    console.log('Settings updated:', data);
+                    alert('Settings updated successfully!');
+                })
+                .catch(error => {
+                    console.error('Error updating settings:', error);
+                    alert('Error updating settings. Please try again later.');
+                });
+        }
+    </script>
+
 </body>
 </html>
