@@ -78,7 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)build\</OutDir>
     <IntDir>$(ShortProjectName)build\intermediates\</IntDir>
-    <IncludePath>C:\Users\luigi\source\repos\gaming chair\external dependencies;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\jak\source\repos\gaming-chair-gi2\external dependencies;C:\Users\luigi\source\repos\gaming chair\external dependencies;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

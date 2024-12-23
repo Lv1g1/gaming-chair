@@ -63,6 +63,7 @@ typedef struct {
 	int AIMBOT_SMOOTH;
 } Settings;
 
+
 extern char WORKING_DIR[256];
 extern Settings *settings;
 

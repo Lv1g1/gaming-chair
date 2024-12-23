@@ -86,6 +86,7 @@ bool parseSettings(const std::string& postData, Settings &new_settings) {
 			}
 			else if (name == "BOX_HEIGHT") {
 				new_settings.BOX_HEIGHT = std::stof(value);
+				//std::cout << "!!!!!!!!!!BOX_HEIGHT: " << new_settings.BOX_HEIGHT << std::endl;
 			}
 			else if (name == "BOX_HEIGHT_WIDTH_RATIO") {
 				new_settings.BOX_HEIGHT_WIDTH_RATIO = std::stof(value);
@@ -283,18 +284,20 @@ void Server::handleClient(SOCKET clientSocket) {
     char buffer[9182];
 	int length = 0;
 	// Loop until all data is received or until an error occurs
-	while (true) {
+	int temp_recv_bytes = 0;
+	while (temp_recv_bytes == 0) {
 		int bytesReceived = recv(clientSocket, buffer + length, sizeof(buffer) - length - 1, 0);
+		temp_recv_bytes = bytesReceived;
 		length += bytesReceived;
-		if (bytesReceived == 0) {
-			// Connection closed by the client
-			break;
-		}
-		else {
-			// Error occurred
-			// Handle error or break out of the loop
-			break;
-		}
+		//if (bytesReceived == 0) {
+		//	// Connection closed by the client
+		//	break;
+		//}
+		//else {
+		//	// Error occurred
+		//	// Handle error or break out of the loop
+		//	break;
+		//}
 	}
 
 	if (length > 0) {
@@ -305,6 +308,8 @@ void Server::handleClient(SOCKET clientSocket) {
 			//OutputDebugStringA(postData.c_str());
 
 			Settings new_settings = *settings;
+
+			std::cout << postData << std::endl;
 
 			parseSettings(postData, new_settings);
 
