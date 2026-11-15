@@ -12,6 +12,7 @@ typedef struct {
 #define HEAD_COLOR IM_COL32(settings->HEAD_COLOR_struct.r, settings->HEAD_COLOR_struct.g, settings->HEAD_COLOR_struct.b, settings->HEAD_COLOR_struct.a)
 #define TEXT_COLOR IM_COL32(settings->TEXT_COLOR_struct.r, settings->TEXT_COLOR_struct.g, settings->TEXT_COLOR_struct.b, settings->TEXT_COLOR_struct.a)
 #define AIMBOT_FOV_COLOR IM_COL32(settings->AIMBOT_FOV_COLOR_struct.r, settings->AIMBOT_FOV_COLOR_struct.g, settings->AIMBOT_FOV_COLOR_struct.b, settings->AIMBOT_FOV_COLOR_struct.a)
+#define PROXIMITY_ALERT_COLOR IM_COL32(settings->PROXIMITY_ALERT_COLOR_struct.r, settings->PROXIMITY_ALERT_COLOR_struct.g, settings->PROXIMITY_ALERT_COLOR_struct.b, settings->PROXIMITY_ALERT_COLOR_struct.a)
 
 typedef struct {
 	// Server settings
@@ -61,14 +62,29 @@ typedef struct {
 	Color AIMBOT_FOV_COLOR_struct;
 
 	int AIMBOT_SMOOTH;
+
+	// Wallhack toggle key (Windows virtual-key code, default 'L' = 0x4C)
+	int WALLHACK_TOGGLE_KEY;
+
+	// Proximity alert
+	bool PROXIMITY_ALERT_ENABLED;
+	bool PROXIMITY_ALERT_DRAW;
+	float PROXIMITY_ALERT_RADIUS;
+	float PROXIMITY_ALERT_INTERVAL; // seconds
+	Color PROXIMITY_ALERT_COLOR_struct;
 } Settings;
 
 
 extern char WORKING_DIR[256];
 extern Settings *settings;
 
+void init_console();
 bool validate_settings(Settings s);
 void load_settings();
 void save_settings();
 bool modify_settings(Settings s);
 void refresh_settings();
+
+// Copy of the current configuration, safe to use from another thread (the HTTP
+// server) while the main loop swaps the settings pointer.
+Settings get_settings_snapshot();

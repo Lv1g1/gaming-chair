@@ -77,9 +77,15 @@ bool GUI::init() noexcept
 		.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
 	};
 
-	D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0U, feature_levels, 2U, D3D11_SDK_VERSION, &sdc, &swap_chain, &device, &feature_level, &context);
+	const HRESULT result = D3D11CreateDeviceAndSwapChain(
+		nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0U, feature_levels, 2U,
+		D3D11_SDK_VERSION, &sdc, &swap_chain, &device, &feature_level, &context);
 
-	D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0U, feature_levels, 2U, D3D11_SDK_VERSION, &sdc, &swap_chain, &device, &feature_level, &context);
+	// The swap chain used to be created twice, leaking the first device and
+	// leaving the members inconsistent when creation failed.
+	if (FAILED(result) || !swap_chain || !device || !context) {
+		return false;
+	}
 
 	swap_chain->GetBuffer(0U, IID_PPV_ARGS(&back_buffer));
 
@@ -183,21 +189,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 // world_to_screen function implementation
 bool world_to_screen(const Vector& origin, Vector& screen, const ViewMatrix& matrix) noexcept
 {
-	auto w = matrix[3][0] * origin.x + matrix[3][1] * origin.y + matrix[3][2] * origin.z + matrix[3][3];
-	if (w < 0.001f)
-		return false;
-
-	const float x = matrix[0][0] * origin.x + matrix[0][1] * origin.y + matrix[0][2] * origin.z + matrix[0][3];
-	const float y = matrix[1][0] * origin.x + matrix[1][1] * origin.y + matrix[1][2] * origin.z + matrix[1][3];
-
-	w = 1.0f / w;
-	float nx = x * w;
-	float ny = y * w;
-
 	const ImVec2 size = ImGui::GetIO().DisplaySize;
+	return projection::world_to_screen(origin, screen, matrix, size.x, size.y);
+}
 
-	screen.x = (size.x / 2.0f * nx) + (nx + size.x / 2.0f);
-	screen.y = -(size.y / 2.0f * ny) + (ny + size.y / 2.0f);
+void get_display_size(float& width, float& height) noexcept
+{
+	const ImVec2 size = ImGui::GetIO().DisplaySize;
+	width = size.x;
+	height = size.y;
+}
 
-	return true;
+bool compute_screen_box(const Vector& head, float box_height, float width_to_height_ratio,
+	const ViewMatrix& matrix, projection::ScreenBox& box) noexcept
+{
+	float width = 0.0f;
+	float height = 0.0f;
+	get_display_size(width, height);
+	return projection::compute_box(head, box_height, width_to_height_ratio, matrix, width, height, box);
 }

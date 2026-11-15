@@ -26,7 +26,9 @@ public:
 
 	template <typename T>
 	T read_memory(uintptr_t address) noexcept {
-		T buffer;
+		// Zero-initialised so a failed read returns a deterministic value instead
+		// of whatever happened to be on the stack.
+		T buffer{};
 
 		if constexpr (MODE == KERNEL_MODE) {
 			driver::Request r;
@@ -40,6 +42,27 @@ public:
 		}
 
 		return buffer;
+	}
+
+	// Reads a whole block in a single call. Returns false when the block could not
+	// be read completely. Reading an array in one go (for example the entity
+	// list) is much cheaper than one ReadProcessMemory() per element.
+	bool read_memory_block(uintptr_t address, void* buffer, size_t size) noexcept {
+		if (size == 0)
+			return false;
+
+		if constexpr (MODE == KERNEL_MODE) {
+			driver::Request r;
+			r.target = reinterpret_cast<PVOID>(address);
+			r.buffer = buffer;
+			r.size = size;
+			return driver::read_memory(handle, r);
+		}
+		else {
+			SIZE_T read = 0;
+			return ReadProcessMemory(handle, reinterpret_cast<LPCVOID>(address), buffer, size, &read) != 0
+				&& read == size;
+		}
 	}
 
 	template <typename T>

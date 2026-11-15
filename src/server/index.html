@@ -26,7 +26,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .settingsSection, .wallhackSection, .aimbotSection, .programSection {
+        .settingsSection, .wallhackSection, .aimbotSection, .programSection, .proximitySection {
             margin-bottom: 20px;
         }
 
@@ -83,13 +83,13 @@
         <section class="programSection">
             <h3>Program Settings</h3>
 
-            <label for="SERVER_PORT">SERVER_PORT:</label>
+            <label for="SERVER_PORT">SERVER_PORT (restart required):</label>
             <input type="number" id="SERVER_PORT" name="SERVER_PORT" value="<!-- SERVER_PORT -->"><br>
 
-            <label for="DISPLAY_WIDTH">DISPLAY_WIDTH:</label>
+            <label for="DISPLAY_WIDTH">DISPLAY_WIDTH (restart required):</label>
             <input type="number" id="DISPLAY_WIDTH" name="DISPLAY_WIDTH" value="<!-- DISPLAY_WIDTH -->"><br>
 
-            <label for="DISPLAY_HEIGHT">DISPLAY_HEIGHT:</label>
+            <label for="DISPLAY_HEIGHT">DISPLAY_HEIGHT (restart required):</label>
             <input type="number" id="DISPLAY_HEIGHT" name="DISPLAY_HEIGHT" value="<!-- DISPLAY_HEIGHT -->"><br>
         </section>
 
@@ -192,44 +192,89 @@
             <input type="number" id="AIMBOT_SMOOTH" name="AIMBOT_SMOOTH" value="<!-- AIMBOT_SMOOTH -->"><br>
         </section>
 
+        <section class="proximitySection">
+            <h3>Proximity Alert</h3>
+
+            <label for="WALLHACK_TOGGLE_KEY">WALLHACK_TOGGLE_KEY:</label>
+            <select id="WALLHACK_TOGGLE_KEY" name="WALLHACK_TOGGLE_KEY">
+                <option value="76" <!-- WALLHACK_KEY_L_SELECTED --> >L</option>
+                <option value="75" <!-- WALLHACK_KEY_K_SELECTED --> >K</option>
+                <option value="112" <!-- WALLHACK_KEY_F1_SELECTED --> >F1</option>
+                <option value="113" <!-- WALLHACK_KEY_F2_SELECTED --> >F2</option>
+                <option value="36" <!-- WALLHACK_KEY_HOME_SELECTED --> >Home</option>
+                <option value="35" <!-- WALLHACK_KEY_END_SELECTED --> >End</option>
+            </select><br>
+
+            <label for="PROXIMITY_ALERT_ENABLED">PROXIMITY_ALERT_ENABLED:</label>
+            <input type="checkbox" id="PROXIMITY_ALERT_ENABLED" name="PROXIMITY_ALERT_ENABLED" <!-- PROXIMITY_ALERT_ENABLED -->><br>
+
+            <label for="PROXIMITY_ALERT_DRAW">PROXIMITY_ALERT_DRAW:</label>
+            <input type="checkbox" id="PROXIMITY_ALERT_DRAW" name="PROXIMITY_ALERT_DRAW" <!-- PROXIMITY_ALERT_DRAW -->><br>
+
+            <label for="PROXIMITY_ALERT_RADIUS">PROXIMITY_ALERT_RADIUS:</label>
+            <input type="number" id="PROXIMITY_ALERT_RADIUS" name="PROXIMITY_ALERT_RADIUS" value="<!-- PROXIMITY_ALERT_RADIUS -->"><br>
+
+            <label for="PROXIMITY_ALERT_INTERVAL">PROXIMITY_ALERT_INTERVAL (sec):</label>
+            <input type="number" id="PROXIMITY_ALERT_INTERVAL" name="PROXIMITY_ALERT_INTERVAL" value="<!-- PROXIMITY_ALERT_INTERVAL -->"><br>
+
+            <label for="PROXIMITY_ALERT_COLOR">PROXIMITY_ALERT_COLOR:</label>
+            <input type="color" id="PROXIMITY_ALERT_COLOR" name="PROXIMITY_ALERT_COLOR" value="<!-- PROXIMITY_ALERT_COLOR -->"><br>
+        </section>
+
         <section class="submitSection">
-            <button type="button" onclick="sendSettings()">Submit</button>
+            <button type="button" id="submitButton">Submit</button>
+            <p id="statusMessage" style="text-align:center; min-height:1.2em; margin:10px 0 0 0;"></p>
         </section>
     </form>
 
     <script>
-        function sendSettings() {
+        async function sendSettings() {
             const form = document.getElementById("settingsForm");
+            const button = document.getElementById("submitButton");
+            const status = document.getElementById("statusMessage");
             const formData = new FormData(form);
 
+            // Unchecked boxes are not sent by the browser: send them explicitly
+            // so the server can tell "off" from "missing".
             form.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                 if (!checkbox.checked) {
                     formData.append(checkbox.name, "off");
                 }
             });
 
-            fetch('http://127.0.0.1:12345/', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text(); // Assicurati di chiamare la funzione
-                })
-                .then(data => {
-                    console.log('Settings updated:', data);
-                    alert('Settings updated successfully!');
-                })
-                .catch(error => {
-                    console.error('Error updating settings:', error);
-                    alert('Error updating settings. Please try again later.');
-                });
+            // The page is normally served by the tool itself. When it is opened
+            // from disk there is no origin to resolve '/' against, so fall back
+            // to the configured port on localhost.
+            const isHttp = location.protocol === "http:" || location.protocol === "https:";
+            const port = (document.getElementById("SERVER_PORT").value || "").trim();
+            const url = isHttp ? "/" : "http://127.0.0.1:" + port + "/";
+
+            // The handler used to be registered twice (inline onclick + a second
+            // listener), which fired two POSTs per click and could make one of
+            // them fail against the single-threaded server.
+            button.disabled = true;
+            status.textContent = "Saving...";
+
+            try {
+                const response = await fetch(url, { method: "POST", body: formData });
+                const text = (await response.text()).trim();
+
+                if (!response.ok) {
+                    throw new Error(text || ("HTTP " + response.status));
+                }
+
+                status.textContent = "Settings updated.";
+                alert("Settings updated successfully!");
+            } catch (error) {
+                console.error("Error updating settings:", error);
+                status.textContent = error.message;
+                alert("Error updating settings:\n" + error.message);
+            } finally {
+                button.disabled = false;
+            }
         }
 
-        // Collegare la funzione al bottone di submit
-        document.querySelector("button[type='button']").addEventListener("click", sendSettings);
+        document.getElementById("submitButton").addEventListener("click", sendSettings);
     </script>
 
 </body>

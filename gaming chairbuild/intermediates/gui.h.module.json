@@ -5,14 +5,14 @@
         {
             "primary-output": "gaming chairbuild\\intermediates\\gui.h.obj",
             "outputs": [
-                "C:\\Users\\jak\\Source\\Repos\\gaming-chair-gi2\\gaming chairbuild\\intermediates\\vc143.pdb",
+                "C:\\Users\\ubu\\Desktop\\gaming-chair\\gaming chairbuild\\intermediates\\vc145.pdb",
                 "gaming chairbuild\\intermediates\\",
-                "C:\\Users\\jak\\Source\\Repos\\gaming-chair-gi2\\gaming chairbuild\\intermediates\\gui.h.ifc"
+                "C:\\Users\\ubu\\Desktop\\gaming-chair\\gaming chairbuild\\intermediates\\gui.h.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "src\\gui.h",
-                    "source-path": "c:\\users\\jak\\source\\repos\\gaming-chair-gi2\\src\\gui.h",
+                    "source-path": "c:\\users\\ubu\\desktop\\gaming-chair\\src\\gui.h",
                     "lookup-method": "absolute"
                 }
             ],
