@@ -1,281 +1,2277 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cheat Settings</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>gaming chair — impostazioni</title>
+<style>
+:root{
+  --bg:#0a0c11;
+  --surface:#10141b;
+  --surface-2:#151a23;
+  --line:rgba(255,255,255,.07);
+  --line-2:rgba(255,255,255,.12);
+  --ink:#e7edf5;
+  --muted:#8e9bad;
+  --faint:#78859a;
+  --accent:#c9f24d;
+  --warn:#ffb457;
+  --danger:#ff6b6b;
+  --mono:"Cascadia Code","Cascadia Mono","JetBrains Mono",Consolas,ui-monospace,"SFMono-Regular",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+*,*::before,*::after{box-sizing:border-box}
 
-        form {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
-        .settingsSection, .wallhackSection, .aimbotSection, .programSection, .proximitySection {
-            margin-bottom: 20px;
-        }
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:14px;
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
 
-        input[type="checkbox"], input[type="color"] {
-            margin-left: 5px;
-        }
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:radial-gradient(920px 440px at 50% -140px,rgba(201,242,77,.055),rgba(201,242,77,0) 72%);
+}
 
-        input[type="number"], select {
-            width: calc(100% - 25px);
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px,rgba(255,255,255,0) 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,rgba(255,255,255,0) 1px);
+  background-size:64px 64px,64px 64px;
+  background-position:center top;
+  -webkit-mask-image:radial-gradient(125% 95% at 50% 0%,#000 0%,rgba(0,0,0,.5) 58%,rgba(0,0,0,0) 100%);
+  mask-image:radial-gradient(125% 95% at 50% 0%,#000 0%,rgba(0,0,0,.5) 58%,rgba(0,0,0,0) 100%);
+}
 
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
+.skip{
+  position:absolute;
+  left:14px;
+  top:-60px;
+  z-index:80;
+  padding:9px 13px;
+  border-radius:8px;
+  background:var(--accent);
+  color:#080a0e;
+  font:600 12px/1 var(--sans);
+  text-decoration:none;
+}
+.skip:focus{top:14px}
 
-            button:hover {
-                background-color: #0056b3;
-            }
+.noscript{
+  position:relative;
+  z-index:2;
+  margin:0;
+  padding:10px 24px;
+  background:rgba(255,180,87,.08);
+  border-bottom:1px solid rgba(255,180,87,.22);
+  color:#ffcf95;
+  font-size:12.5px;
+  text-align:center;
+}
 
-        .submitSection {
-            text-align: center;
-        }
+/* ---------- header ---------- */
 
-        .input-row {
-            display: flex;
-            align-items: center;
-        }
+.header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:rgba(10,12,17,.9);
+  -webkit-backdrop-filter:blur(10px) saturate(120%);
+  backdrop-filter:blur(10px) saturate(120%);
+  border-bottom:1px solid var(--line);
+}
+.header::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(201,242,77,.42),rgba(201,242,77,0) 42%);
+  transition:background .15s ease;
+}
+body.is-dirty .header::after{
+  background:linear-gradient(90deg,rgba(255,180,87,.55),rgba(255,180,87,0) 48%);
+}
+.header-inner{
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 24px;
+  height:64px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-width:0;
+}
+.mark{
+  flex:none;
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(201,242,77,.3);
+  border-radius:9px;
+  color:var(--accent);
+  background:linear-gradient(180deg,rgba(201,242,77,.12),rgba(201,242,77,.02));
+  box-shadow:inset 0 1px 0 rgba(201,242,77,.16);
+}
+.mark svg{width:16px;height:16px;display:block}
+.brand-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.brand-name{
+  margin:0;
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:.005em;
+  color:#f2f6fb;
+  white-space:nowrap;
+}
+.brand-sub{
+  font:500 10.5px/1.2 var(--mono);
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  color:var(--faint);
+  white-space:nowrap;
+}
+.header-actions{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
 
-            .input-row input[type="color"] {
-                width: auto;
-                margin-left: 5px;
-            }
-    </style>
+.state{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  height:28px;
+  padding:0 10px;
+  border-radius:7px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+  font:600 11px/1 var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+  transition:color .15s ease,border-color .15s ease,background-color .15s ease;
+}
+.state-dot{
+  flex:none;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:currentColor;
+  box-shadow:0 0 7px currentColor;
+}
+.state[data-state="saved"]{color:#93a1b4}
+.state[data-state="dirty"]{
+  color:var(--warn);
+  border-color:rgba(255,180,87,.28);
+  background:rgba(255,180,87,.07);
+  animation:dirty-pulse 2.4s ease-in-out infinite;
+}
+.state[data-state="saving"]{
+  color:var(--accent);
+  border-color:rgba(201,242,77,.3);
+  background:rgba(201,242,77,.06);
+}
+.state[data-state="saving"] .state-dot{animation:soft-blink 1.1s ease-in-out infinite}
+.state[data-state="error"]{
+  color:var(--danger);
+  border-color:rgba(255,107,107,.32);
+  background:rgba(255,107,107,.07);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  height:34px;
+  padding:0 14px;
+  border:1px solid transparent;
+  border-radius:8px;
+  font:600 12.5px/1 var(--sans);
+  letter-spacing:.01em;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .12s ease,box-shadow .15s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn--ghost{
+  background:transparent;
+  border-color:rgba(255,255,255,.13);
+  color:var(--ink);
+}
+.btn--ghost:hover:not(:disabled){background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2)}
+.btn--primary{
+  background:var(--accent);
+  color:#090c10;
+  box-shadow:0 0 0 1px rgba(201,242,77,.45),0 6px 18px -10px rgba(201,242,77,.55);
+}
+.btn--primary:hover:not(:disabled){background:#d5fa68}
+.btn:disabled{
+  cursor:not-allowed;
+  transform:none;
+}
+.btn--primary:disabled{
+  background:#1a212c;
+  color:#66748a;
+  box-shadow:none;
+}
+.btn--ghost:disabled{
+  border-color:rgba(255,255,255,.07);
+  color:#5f6c80;
+  background:transparent;
+}
+.btn:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* ---------- layout ---------- */
+
+.shell{
+  position:relative;
+  z-index:1;
+  max-width:1240px;
+  margin:0 auto;
+  padding:22px 24px 40px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  gap:22px;
+}
+main{min-width:0}
+.stack{display:grid;gap:16px;align-content:start}
+.side{min-width:0}
+.side-inner{
+  position:sticky;
+  top:80px;
+  display:grid;
+  gap:16px;
+  align-content:start;
+}
+
+/* ---------- card ---------- */
+
+.card{
+  position:relative;
+  padding:16px 18px 18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(180deg,#12171f 0%,var(--surface) 46%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 1px 2px rgba(0,0,0,.45);
+}
+.card-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+  min-width:0;
+}
+.card-head h2{
+  margin:0;
+  font-size:15px;
+  font-weight:650;
+  letter-spacing:-.006em;
+  color:#eef3f9;
+  white-space:nowrap;
+}
+.index{
+  flex:none;
+  padding:4px 6px;
+  border:1px solid rgba(201,242,77,.22);
+  border-radius:6px;
+  background:rgba(201,242,77,.055);
+  color:var(--accent);
+  font:600 10px/1 var(--mono);
+  letter-spacing:.12em;
+}
+.head-rule{
+  flex:1 1 auto;
+  min-width:12px;
+  height:1px;
+  background:linear-gradient(90deg,rgba(255,255,255,.13),rgba(255,255,255,.015));
+}
+.head-hint{
+  flex:none;
+  font:500 9.5px/1 var(--mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--faint);
+  white-space:nowrap;
+}
+
+/* ---------- toggle rows ---------- */
+
+.rows{display:grid}
+.row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:9px 10px;
+  margin:0 -10px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:background-color .14s ease;
+}
+.row:hover{background:rgba(255,255,255,.028)}
+.rows .row + .row{box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.row-copy{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex:1 1 auto;
+  min-width:0;
+}
+.row-name{
+  font:600 11px/1.25 var(--mono);
+  letter-spacing:.085em;
+  text-transform:uppercase;
+  color:#dbe4ef;
+  overflow-wrap:anywhere;
+}
+.row-desc{
+  font-size:12px;
+  line-height:1.35;
+  color:var(--muted);
+}
+.rows--inset{
+  margin-left:2px;
+  padding-left:11px;
+  border-left:1px solid rgba(255,255,255,.055);
+}
+.rows--after-field{margin-top:4px}
+
+/* ---------- switch ---------- */
+
+.sw{
+  position:relative;
+  flex:none;
+  width:40px;
+  height:22px;
+}
+.sw input{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  margin:0;
+  opacity:0;
+  cursor:pointer;
+  z-index:1;
+}
+.sw-ui{
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+  background:#1a202b;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
+  pointer-events:none;
+  transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+.sw-ui::after{
+  content:"";
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#7d8a9d;
+  transition:transform .15s ease,background-color .15s ease,box-shadow .15s ease;
+}
+.sw input:checked + .sw-ui{
+  background:rgba(201,242,77,.16);
+  border-color:rgba(201,242,77,.55);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.35),0 0 12px -2px rgba(201,242,77,.28);
+}
+.sw input:checked + .sw-ui::after{
+  transform:translateX(18px);
+  background:var(--accent);
+  box-shadow:0 0 9px rgba(201,242,77,.6);
+}
+.sw input:focus-visible + .sw-ui{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- fields ---------- */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:2px;
+}
+.group{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:5px 0 -2px;
+  font:600 9.5px/1 var(--mono);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#7d8a9d;
+}
+.group:first-child{margin-top:0}
+.group::after{
+  content:"";
+  flex:1 1 auto;
+  height:1px;
+  background:rgba(255,255,255,.05);
+}
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+.field--wide{grid-column:1 / -1}
+.grid--after-rows{margin-top:12px}
+.field-top{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+.field-id{
+  font:600 10px/1.3 var(--mono);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#c2cddb;
+  cursor:pointer;
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:color .14s ease;
+}
+.field-id:hover{color:#eef3f9}
+.field-unit{
+  flex:none;
+  font:500 9.5px/1 var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#7d8a9d;
+}
+.field-flag{
+  flex:none;
+  padding:3px 5px;
+  border:1px solid rgba(255,180,87,.24);
+  border-radius:5px;
+  background:rgba(255,180,87,.08);
+  color:var(--warn);
+  font:600 9.5px/1 var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.hex{
+  flex:none;
+  font:600 10px/1 var(--mono);
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.url-chip{
+  flex:0 1 auto;
+  min-width:0;
+  font:500 10px/1 var(--mono);
+  letter-spacing:.02em;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+input[type="number"]{
+  width:100%;
+  height:36px;
+  padding:0 10px;
+  border:1px solid rgba(255,255,255,.085);
+  border-radius:8px;
+  background:rgba(6,9,13,.7);
+  color:var(--ink);
+  font:500 13px/1 var(--mono);
+  font-variant-numeric:tabular-nums;
+  appearance:textfield;
+  -moz-appearance:textfield;
+  transition:border-color .15s ease,box-shadow .15s ease,background-color .15s ease;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type="number"]:hover{border-color:rgba(255,255,255,.16)}
+input[type="number"]:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-color:rgba(201,242,77,.55);
+  background:rgba(8,12,18,.92);
+}
+
+input[type="color"]{
+  width:100%;
+  height:36px;
+  padding:2px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;
+  background:rgba(6,9,13,.7);
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+input[type="color"]::-webkit-color-swatch-wrapper{padding:0}
+input[type="color"]::-webkit-color-swatch{
+  border:1px solid rgba(0,0,0,.55);
+  border-radius:5px;
+}
+input[type="color"]:hover{border-color:rgba(255,255,255,.2)}
+input[type="color"]:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-color:rgba(201,242,77,.55);
+}
+
+.select{position:relative}
+.select::after{
+  content:"";
+  position:absolute;
+  right:13px;
+  top:50%;
+  width:7px;
+  height:7px;
+  border-right:1.5px solid var(--muted);
+  border-bottom:1.5px solid var(--muted);
+  transform:translateY(-70%) rotate(45deg);
+  pointer-events:none;
+}
+select{
+  width:100%;
+  height:36px;
+  padding:0 34px 0 10px;
+  border:1px solid rgba(255,255,255,.085);
+  border-radius:8px;
+  background:rgba(6,9,13,.7);
+  color:var(--ink);
+  font:500 12.5px/1 var(--mono);
+  letter-spacing:.04em;
+  appearance:none;
+  -webkit-appearance:none;
+  cursor:pointer;
+  transition:border-color .15s ease,box-shadow .15s ease,background-color .15s ease;
+}
+select:hover{border-color:rgba(255,255,255,.16)}
+select:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-color:rgba(201,242,77,.55);
+  background:rgba(8,12,18,.92);
+}
+select option{background:#0f141c;color:var(--ink)}
+
+/* ---------- details ---------- */
+
+.more{
+  margin-top:10px;
+  border-top:1px solid rgba(255,255,255,.065);
+}
+.more summary{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 10px;
+  margin:0 -10px;
+  border-radius:10px;
+  cursor:pointer;
+  list-style:none;
+  transition:background-color .14s ease;
+}
+.more summary::-webkit-details-marker{display:none}
+.more summary:hover{background:rgba(255,255,255,.028)}
+.more summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.summary-title{
+  font-size:12.5px;
+  font-weight:600;
+  color:#dbe4ef;
+}
+.summary-desc{
+  font-size:11.5px;
+  color:var(--muted);
+}
+.chev{
+  flex:none;
+  width:7px;
+  height:7px;
+  margin-left:auto;
+  margin-right:2px;
+  border-right:1.5px solid var(--muted);
+  border-bottom:1.5px solid var(--muted);
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .16s ease;
+}
+.more[open] .chev{transform:rotate(225deg) translateY(-1px)}
+.more[open] summary{border-radius:10px 10px 0 0}
+.more-body{padding:2px 0 0}
+
+/* ---------- notes, badges, hints ---------- */
+
+.note{
+  display:block;
+  margin:12px 0 0;
+  padding:9px 12px;
+  border-left:2px solid rgba(255,180,87,.45);
+  border-radius:0 8px 8px 0;
+  background:rgba(255,180,87,.05);
+  color:#cdb9a0;
+  font-size:11.5px;
+  line-height:1.5;
+}
+.note--neutral{
+  border-left-color:rgba(255,255,255,.14);
+  background:rgba(255,255,255,.025);
+  color:var(--muted);
+}
+.note strong{color:#e6d6bd;font-weight:600}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  flex:none;
+  padding:4px 7px;
+  border:1px solid rgba(255,180,87,.24);
+  border-radius:6px;
+  background:rgba(255,180,87,.08);
+  color:var(--warn);
+  font:600 9px/1 var(--mono);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.hint{
+  margin:0;
+  font-size:11px;
+  line-height:1.45;
+  color:var(--faint);
+}
+.hint--after-grid{margin-top:12px}
+
+/* ---------- preview ---------- */
+
+.card--preview{
+  padding-bottom:16px;
+  border-color:rgba(201,242,77,.18);
+  box-shadow:inset 0 1px 0 rgba(201,242,77,.09),0 1px 2px rgba(0,0,0,.45);
+}
+.canvas-wrap{
+  position:relative;
+  aspect-ratio:16 / 9;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:10px;
+  overflow:hidden;
+  background:#05070a;
+  box-shadow:inset 0 0 40px rgba(0,0,0,.55);
+}
+.canvas-wrap canvas{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+}
+.canvas-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  padding:4px 6px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:5px;
+  background:rgba(5,8,12,.72);
+  color:rgba(231,237,245,.78);
+  font:600 9px/1 var(--mono);
+  letter-spacing:.08em;
+  font-variant-numeric:tabular-nums;
+  pointer-events:none;
+}
+.live{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  flex:none;
+  font:600 9.5px/1 var(--mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.live-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px rgba(201,242,77,.13);
+}
+.preview-caption{
+  display:grid;
+  gap:2px;
+  margin:10px 0 0;
+  font-size:11px;
+  line-height:1.45;
+  color:var(--faint);
+}
+.preview-caption span:first-child{color:var(--muted)}
+
+/* ---------- tips ---------- */
+
+.tips-list{
+  display:grid;
+  gap:10px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.tips-list li{
+  display:flex;
+  gap:9px;
+  font-size:12px;
+  line-height:1.5;
+  color:var(--muted);
+}
+.tips-list li::before{
+  content:"—";
+  flex:none;
+  color:rgba(201,242,77,.5);
+}
+.tips-list .path{
+  font:500 11px/1.4 var(--mono);
+  color:#b9c6d6;
+  overflow-wrap:anywhere;
+}
+.key-row{display:inline-flex;gap:3px;vertical-align:baseline}
+kbd{
+  display:inline-flex;
+  align-items:center;
+  height:17px;
+  padding:0 5px;
+  border:1px solid rgba(255,255,255,.15);
+  border-bottom-width:2px;
+  border-radius:4px;
+  background:rgba(255,255,255,.045);
+  color:#cbd6e4;
+  font:600 9.5px/1 var(--mono);
+  letter-spacing:.04em;
+}
+
+/* ---------- toast ---------- */
+
+.toasts{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:70;
+  display:grid;
+  gap:8px;
+  justify-items:stretch;
+  width:min(370px,calc(100vw - 32px));
+}
+.toast{
+  display:grid;
+  gap:4px;
+  padding:11px 13px;
+  border:1px solid var(--line-2);
+  border-radius:10px;
+  background:rgba(16,20,27,.985);
+  box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
+  cursor:pointer;
+  animation:toast-in .16s ease-out both;
+}
+.toast strong{
+  font:600 9.5px/1.3 var(--mono);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.toast p{
+  margin:0;
+  font:500 11.5px/1.45 var(--mono);
+  color:var(--ink);
+  overflow-wrap:anywhere;
+}
+.toast[data-kind="ok"]{border-color:rgba(201,242,77,.28)}
+.toast[data-kind="ok"] strong{color:var(--accent)}
+.toast[data-kind="error"]{border-color:rgba(255,107,107,.4)}
+.toast[data-kind="error"] strong{color:var(--danger)}
+
+/* ---------- footer ---------- */
+
+.footer{
+  position:relative;
+  z-index:1;
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 24px 30px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  font-size:11px;
+  color:#6f7c8e;
+}
+.footer .dot{color:rgba(255,255,255,.2)}
+.footer .endpoint{
+  font:500 11px/1 var(--mono);
+  letter-spacing:.03em;
+  color:#8794a6;
+}
+
+@keyframes dirty-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,180,87,0)}
+  50%{box-shadow:0 0 0 3px rgba(255,180,87,.1)}
+}
+@keyframes soft-blink{
+  0%,100%{opacity:1}
+  50%{opacity:.35}
+}
+@keyframes toast-in{
+  from{opacity:0;transform:translateY(7px)}
+  to{opacity:1;transform:none}
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:minmax(0,1fr) 330px;padding:20px 20px 36px}
+  .header-inner{padding:0 20px}
+  .footer{padding:0 20px 28px}
+}
+
+@media (max-width:980px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{order:-1}
+  .side-inner{position:static}
+  .card--preview .canvas-wrap{max-width:520px;margin:0 auto}
+  .card--preview .canvas-badge{right:auto;left:8px}
+  .card--preview .preview-caption{max-width:520px;margin-left:auto;margin-right:auto}
+}
+
+@media (max-width:860px){
+  .header-inner{
+    height:auto;
+    flex-wrap:wrap;
+    padding:10px 16px 11px;
+    gap:9px 12px;
+  }
+  .brand{flex:1 1 auto}
+  .header-actions{
+    flex:1 0 100%;
+    margin-left:0;
+    gap:8px;
+    justify-content:flex-start;
+  }
+  .state{margin-right:auto}
+  .btn{height:32px;padding:0 12px}
+  .shell{padding:16px 16px 32px;gap:16px}
+  .footer{padding:0 16px 24px}
+  .toasts{right:12px;left:12px;bottom:12px;width:auto}
+}
+
+@media (max-width:700px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .card{padding:14px 15px 16px;border-radius:14px}
+  .row{padding:10px 8px;margin:0 -8px;gap:12px}
+  .more summary{padding:10px 8px;margin:0 -8px}
+  .rows--inset{padding-left:9px}
+  .head-hint{display:none}
+  .field-id{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+  .field-top{flex-wrap:wrap;row-gap:2px}
+  .row-name{font-size:10.5px;letter-spacing:.07em}
+  .card--preview .canvas-wrap{max-width:none}
+  .canvas-badge{display:none}
+}
+
+@media (max-width:420px){
+  .brand-name{font-size:14px}
+  .brand-sub{font-size:9.5px;letter-spacing:.05em}
+  .mark{width:28px;height:28px;border-radius:8px}
+  .state{height:26px;padding:0 8px;font-size:11px;letter-spacing:.04em}
+  .btn{height:30px;font-size:12px;padding:0 10px}
+  .shell{padding:14px 12px 28px}
+  .header-inner{padding:9px 12px 10px}
+  .footer{padding:0 12px 20px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
 </head>
 <body>
-    <h2>Cheat Settings</h2>
+<a class="skip" href="#main">Salta alle impostazioni</a>
+<div class="bg" aria-hidden="true"></div>
 
-    <form id="settingsForm">
-        <section class="programSection">
-            <h3>Program Settings</h3>
+<noscript><p class="noscript">JavaScript è disattivato: i valori attuali sono visibili, ma senza JS la pagina non può salvare né aggiornare l'anteprima.</p></noscript>
 
-            <label for="SERVER_PORT">SERVER_PORT (restart required):</label>
-            <input type="number" id="SERVER_PORT" name="SERVER_PORT" value="<!-- SERVER_PORT -->"><br>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square">
+          <path d="M3 8V3h5"></path>
+          <path d="M21 8V3h-5"></path>
+          <path d="M3 16v5h5"></path>
+          <path d="M21 16v5h-5"></path>
+          <circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <h1 class="brand-name">gaming chair</h1>
+        <span class="brand-sub">overlay · configurazione</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="state" id="state" data-state="saved">
+        <span class="state-dot" aria-hidden="true"></span>
+        <span id="stateText">Tutto salvato</span>
+      </div>
+      <button type="button" class="btn btn--ghost" id="discardBtn" disabled>Discard</button>
+      <button type="submit" form="settingsForm" class="btn btn--primary" id="saveBtn" disabled>Save</button>
+    </div>
+  </div>
+</header>
 
-            <label for="DISPLAY_WIDTH">DISPLAY_WIDTH (restart required):</label>
-            <input type="number" id="DISPLAY_WIDTH" name="DISPLAY_WIDTH" value="<!-- DISPLAY_WIDTH -->"><br>
+<div class="shell">
+  <main id="main">
+    <form id="settingsForm" class="stack" autocomplete="off" novalidate>
 
-            <label for="DISPLAY_HEIGHT">DISPLAY_HEIGHT (restart required):</label>
-            <input type="number" id="DISPLAY_HEIGHT" name="DISPLAY_HEIGHT" value="<!-- DISPLAY_HEIGHT -->"><br>
-        </section>
+      <section class="card" aria-labelledby="sec01">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">01</span>
+          <h2 id="sec01">ESP / Wallhack</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+          <span class="head-hint">10 controlli</span>
+        </div>
 
-        <section class="settingsSection">
-            <h3>Cheat Settings</h3>
+        <div class="rows">
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">DRAW_BOX</span>
+              <span class="row-desc">Riquadro di ingombro sul nemico, visibile attraverso i muri.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="DRAW_BOX" name="DRAW_BOX" <!-- DRAW_BOX -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-            <label for="DRAW_BOX">DRAW_BOX:</label>
-            <input type="checkbox" id="DRAW_BOX" name="DRAW_BOX" <!-- DRAW_BOX -->><br>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">DRAW_BONES</span>
+              <span class="row-desc">Scheletro completo: colonna, braccia e gambe.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="DRAW_BONES" name="DRAW_BONES" <!-- DRAW_BONES -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-            <label for="DRAW_BONES">DRAW_BONES:</label>
-            <input type="checkbox" id="DRAW_BONES" name="DRAW_BONES" <!-- DRAW_BONES -->><br>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">DRAW_HEALTH_BAR</span>
+              <span class="row-desc">Barra verticale a sinistra del riquadro, proporzionale alla vita.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="DRAW_HEALTH_BAR" name="DRAW_HEALTH_BAR" <!-- DRAW_HEALTH_BAR -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-            <label for="DRAW_HEALTH_BAR">DRAW_HEALTH_BAR:</label>
-            <input type="checkbox" id="DRAW_HEALTH_BAR" name="DRAW_HEALTH_BAR" <!-- DRAW_HEALTH_BAR -->><br>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">DRAW_HEAD</span>
+              <span class="row-desc">Cerchio sulla testa, raggio pari a un quarto della larghezza.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="DRAW_HEAD" name="DRAW_HEAD" <!-- DRAW_HEAD -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-            <label for="DRAW_HEAD">DRAW_HEAD:</label>
-            <input type="checkbox" id="DRAW_HEAD" name="DRAW_HEAD" <!-- DRAW_HEAD -->><br>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">DRAW_TEXT</span>
+              <span class="row-desc">Valore della vita scritto sopra il riquadro.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="DRAW_TEXT" name="DRAW_TEXT" <!-- DRAW_TEXT -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
+        </div>
 
-            <label for="DRAW_TEXT">DRAW_TEXT:</label>
-            <input type="checkbox" id="DRAW_TEXT" name="DRAW_TEXT" <!-- DRAW_TEXT -->><br>
+        <details class="more">
+          <summary>
+            <span class="row-copy">
+              <span class="summary-title">Comportamento quando il nemico è spotted</span>
+              <span class="summary-desc">Mostra anche quando il nemico è già spotted</span>
+            </span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <div class="more-body">
+            <div class="rows rows--inset">
+              <label class="row">
+                <span class="row-copy">
+                  <span class="row-name">DRAW_BOX_WHEN_SPOTTED</span>
+                  <span class="row-desc">Riquadro anche sui nemici già spotted.</span>
+                </span>
+                <span class="sw">
+                  <input type="checkbox" id="DRAW_BOX_WHEN_SPOTTED" name="DRAW_BOX_WHEN_SPOTTED" <!-- DRAW_BOX_WHEN_SPOTTED -->>
+                  <span class="sw-ui" aria-hidden="true"></span>
+                </span>
+              </label>
 
-            <label for="DRAW_BOX_WHEN_SPOTTED">DRAW_BOX_WHEN_SPOTTED:</label>
-            <input type="checkbox" id="DRAW_BOX_WHEN_SPOTTED" name="DRAW_BOX_WHEN_SPOTTED" <!-- DRAW_BOX_WHEN_SPOTTED -->><br>
+              <label class="row">
+                <span class="row-copy">
+                  <span class="row-name">DRAW_BONES_WHEN_SPOTTED</span>
+                  <span class="row-desc">Scheletro anche sui nemici già spotted.</span>
+                </span>
+                <span class="sw">
+                  <input type="checkbox" id="DRAW_BONES_WHEN_SPOTTED" name="DRAW_BONES_WHEN_SPOTTED" <!-- DRAW_BONES_WHEN_SPOTTED -->>
+                  <span class="sw-ui" aria-hidden="true"></span>
+                </span>
+              </label>
 
-            <label for="DRAW_BONES_WHEN_SPOTTED">DRAW_BONES_WHEN_SPOTTED:</label>
-            <input type="checkbox" id="DRAW_BONES_WHEN_SPOTTED" name="DRAW_BONES_WHEN_SPOTTED" <!-- DRAW_BONES_WHEN_SPOTTED -->><br>
+              <label class="row">
+                <span class="row-copy">
+                  <span class="row-name">DRAW_HEALTH_BAR_WHEN_SPOTTED</span>
+                  <span class="row-desc">Barra della vita anche sui nemici già spotted.</span>
+                </span>
+                <span class="sw">
+                  <input type="checkbox" id="DRAW_HEALTH_BAR_WHEN_SPOTTED" name="DRAW_HEALTH_BAR_WHEN_SPOTTED" <!-- DRAW_HEALTH_BAR_WHEN_SPOTTED -->>
+                  <span class="sw-ui" aria-hidden="true"></span>
+                </span>
+              </label>
 
-            <label for="DRAW_HEALTH_BAR_WHEN_SPOTTED">DRAW_HEALTH_BAR_WHEN_SPOTTED:</label>
-            <input type="checkbox" id="DRAW_HEALTH_BAR_WHEN_SPOTTED" name="DRAW_HEALTH_BAR_WHEN_SPOTTED" <!-- DRAW_HEALTH_BAR_WHEN_SPOTTED -->><br>
+              <label class="row">
+                <span class="row-copy">
+                  <span class="row-name">DRAW_HEAD_WHEN_SPOTTED</span>
+                  <span class="row-desc">Cerchio della testa anche sui nemici già spotted.</span>
+                </span>
+                <span class="sw">
+                  <input type="checkbox" id="DRAW_HEAD_WHEN_SPOTTED" name="DRAW_HEAD_WHEN_SPOTTED" <!-- DRAW_HEAD_WHEN_SPOTTED -->>
+                  <span class="sw-ui" aria-hidden="true"></span>
+                </span>
+              </label>
 
-            <label for="DRAW_HEAD_WHEN_SPOTTED">DRAW_HEAD_WHEN_SPOTTED:</label>
-            <input type="checkbox" id="DRAW_HEAD_WHEN_SPOTTED" name="DRAW_HEAD_WHEN_SPOTTED" <!-- DRAW_HEAD_WHEN_SPOTTED -->><br>
+              <label class="row">
+                <span class="row-copy">
+                  <span class="row-name">DRAW_TEXT_WHEN_SPOTTED</span>
+                  <span class="row-desc">Testo della vita anche sui nemici già spotted.</span>
+                </span>
+                <span class="sw">
+                  <input type="checkbox" id="DRAW_TEXT_WHEN_SPOTTED" name="DRAW_TEXT_WHEN_SPOTTED" <!-- DRAW_TEXT_WHEN_SPOTTED -->>
+                  <span class="sw-ui" aria-hidden="true"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </details>
+      </section>
 
-            <label for="DRAW_TEXT_WHEN_SPOTTED">DRAW_TEXT_WHEN_SPOTTED:</label>
-            <input type="checkbox" id="DRAW_TEXT_WHEN_SPOTTED" name="DRAW_TEXT_WHEN_SPOTTED" <!-- DRAW_TEXT_WHEN_SPOTTED -->><br>
+      <section class="card" aria-labelledby="sec02">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">02</span>
+          <h2 id="sec02">Stile ESP</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+          <span class="head-hint">11 controlli</span>
+        </div>
 
-            <label for="AIMBOT_ENABLED">AIMBOT_ENABLED:</label>
-            <input type="checkbox" id="AIMBOT_ENABLED" name="AIMBOT_ENABLED" <!-- AIMBOT_ENABLED -->><br>
+        <div class="grid">
+          <div class="group">Riquadro</div>
 
-            <label for="AIMBOT_ENABLED_WHEN_NOT_SPOTTED">AIMBOT_ENABLED_WHEN_NOT_SPOTTED:</label>
-            <input type="checkbox" id="AIMBOT_ENABLED_WHEN_NOT_SPOTTED" name="AIMBOT_ENABLED_WHEN_NOT_SPOTTED" <!-- AIMBOT_ENABLED_WHEN_NOT_SPOTTED -->><br>
-        </section>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="BOX_HEIGHT">BOX_HEIGHT</label>
+              <span class="field-unit">unità</span>
+            </div>
+            <input type="number" id="BOX_HEIGHT" name="BOX_HEIGHT" value="<!-- BOX_HEIGHT -->" min="0" max="1000" step="1" inputmode="decimal">
+          </div>
 
-        <section class="wallhackSection">
-            <h3>Wallhack Settings</h3>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="BOX_HEIGHT_WIDTH_RATIO">BOX_HEIGHT_WIDTH_RATIO</label>
+              <span class="field-unit">× altezza</span>
+            </div>
+            <input type="number" id="BOX_HEIGHT_WIDTH_RATIO" name="BOX_HEIGHT_WIDTH_RATIO" value="<!-- BOX_HEIGHT_WIDTH_RATIO -->" min="0" max="10" step="0.05" inputmode="decimal" aria-describedby="boxWidthHint">
+          </div>
 
-            <label for="BOX_HEIGHT">BOX_HEIGHT:</label>
-            <input type="number" id="BOX_HEIGHT" name="BOX_HEIGHT" value="<!-- BOX_HEIGHT -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="BOX_COLOR">BOX_COLOR</label>
+              <span class="hex" data-hex-for="BOX_COLOR">—</span>
+            </div>
+            <input type="color" id="BOX_COLOR" name="BOX_COLOR" value="<!-- BOX_COLOR -->">
+          </div>
 
-            <label for="BOX_HEIGHT_WIDTH_RATIO">BOX_HEIGHT_WIDTH_RATIO:</label>
-            <input type="number" id="BOX_HEIGHT_WIDTH_RATIO" name="BOX_HEIGHT_WIDTH_RATIO" value="<!-- BOX_HEIGHT_WIDTH_RATIO -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="BOX_THICKNESS">BOX_THICKNESS</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="BOX_THICKNESS" name="BOX_THICKNESS" value="<!-- BOX_THICKNESS -->" min="0" max="100" step="0.5" inputmode="decimal">
+          </div>
 
-            <label for="BOX_COLOR">BOX_COLOR:</label>
-            <input type="color" id="BOX_COLOR" name="BOX_COLOR" value="<!-- BOX_COLOR -->"><br>
+          <div class="group">Ossa</div>
 
-            <label for="BOX_THICKNESS">BOX_THICKNESS:</label>
-            <input type="number" id="BOX_THICKNESS" name="BOX_THICKNESS" value="<!-- BOX_THICKNESS -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="BONES_COLOR">BONES_COLOR</label>
+              <span class="hex" data-hex-for="BONES_COLOR">—</span>
+            </div>
+            <input type="color" id="BONES_COLOR" name="BONES_COLOR" value="<!-- BONES_COLOR -->">
+          </div>
 
-            <label for="BONES_COLOR">BONES_COLOR:</label>
-            <input type="color" id="BONES_COLOR" name="BONES_COLOR" value="<!-- BONES_COLOR -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="BONES_THICKNESS">BONES_THICKNESS</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="BONES_THICKNESS" name="BONES_THICKNESS" value="<!-- BONES_THICKNESS -->" min="0" max="100" step="0.5" inputmode="decimal">
+          </div>
 
-            <label for="BONES_THICKNESS">BONES_THICKNESS:</label>
-            <input type="number" id="BONES_THICKNESS" name="BONES_THICKNESS" value="<!-- BONES_THICKNESS -->"><br>
+          <div class="group">Testa</div>
 
-            <label for="HEALTH_BAR_THICKNESS">HEALTH_BAR_THICKNESS:</label>
-            <input type="number" id="HEALTH_BAR_THICKNESS" name="HEALTH_BAR_THICKNESS" value="<!-- HEALTH_BAR_THICKNESS -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="HEAD_RADIUS">HEAD_RADIUS</label>
+              <span class="field-flag">non usato</span>
+            </div>
+            <input type="number" id="HEAD_RADIUS" name="HEAD_RADIUS" value="<!-- HEAD_RADIUS -->" min="0" max="1000" step="1" inputmode="decimal" aria-describedby="headRadiusHint">
+            <p class="hint" id="headRadiusHint">L'overlay ricava il raggio dalla larghezza del riquadro (÷4): il valore resta salvato ma non viene disegnato.</p>
+          </div>
 
-            <label for="HEAD_RADIUS">HEAD_RADIUS:</label>
-            <input type="number" id="HEAD_RADIUS" name="HEAD_RADIUS" value="<!-- HEAD_RADIUS -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="HEAD_COLOR">HEAD_COLOR</label>
+              <span class="hex" data-hex-for="HEAD_COLOR">—</span>
+            </div>
+            <input type="color" id="HEAD_COLOR" name="HEAD_COLOR" value="<!-- HEAD_COLOR -->">
+          </div>
 
-            <label for="HEAD_COLOR">HEAD_COLOR:</label>
-            <input type="color" id="HEAD_COLOR" name="HEAD_COLOR" value="<!-- HEAD_COLOR -->"><br>
+          <div class="group">Vita e testo</div>
 
-            <label for="TEXT_COLOR">TEXT_COLOR:</label>
-            <input type="color" id="TEXT_COLOR" name="TEXT_COLOR" value="<!-- TEXT_COLOR -->"><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="HEALTH_BAR_THICKNESS">HEALTH_BAR_THICKNESS</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="HEALTH_BAR_THICKNESS" name="HEALTH_BAR_THICKNESS" value="<!-- HEALTH_BAR_THICKNESS -->" min="0" max="100" step="0.5" inputmode="decimal">
+          </div>
 
-            <label for="TEXT_THICKNESS">TEXT_THICKNESS:</label>
-            <input type="number" id="TEXT_THICKNESS" name="TEXT_THICKNESS" value="<!-- TEXT_THICKNESS -->"><br>
-        </section>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="TEXT_THICKNESS">TEXT_THICKNESS</label>
+              <span class="field-flag">non usato</span>
+            </div>
+            <input type="number" id="TEXT_THICKNESS" name="TEXT_THICKNESS" value="<!-- TEXT_THICKNESS -->" min="0" max="100" step="0.5" inputmode="decimal" aria-describedby="textThicknessHint">
+            <p class="hint" id="textThicknessHint">L'overlay disegna il testo con il font fisso: lo spessore resta salvato ma non viene usato.</p>
+          </div>
 
-        <section class="aimbotSection">
-            <h3>Aimbot Settings</h3>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="TEXT_COLOR">TEXT_COLOR</label>
+              <span class="hex" data-hex-for="TEXT_COLOR">—</span>
+            </div>
+            <input type="color" id="TEXT_COLOR" name="TEXT_COLOR" value="<!-- TEXT_COLOR -->">
+          </div>
+        </div>
 
-            <label for="AIMBOT_KEY">AIMBOT_KEY:</label>
-            <select id="AIMBOT_KEY" name="AIMBOT_KEY">
-                <option value="VK_RBUTTON" <!-- AIMBOT_KEY_VK_RBUTTON_SELECTED --> >Right Mouse Button</option>
-                <!-- Aggiungi altre opzioni qui se necessario, con placeholder per l'attributo selected -->
-            </select><br>
+        <p class="hint hint--after-grid" id="boxWidthHint">La larghezza del riquadro è l'altezza moltiplicata per BOX_HEIGHT_WIDTH_RATIO.</p>
+      </section>
 
-            <label for="AIMBOT_FOV">AIMBOT_FOV:</label>
-            <input type="number" id="AIMBOT_FOV" name="AIMBOT_FOV" value="<!-- AIMBOT_FOV -->"><br>
+      <section class="card" aria-labelledby="sec03">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">03</span>
+          <h2 id="sec03">Aimbot</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+          <span class="head-hint">6 controlli</span>
+        </div>
 
-            <label for="AIMBOT_DRAW_FOV">AIMBOT_DRAW_FOV:</label>
-            <input type="checkbox" id="AIMBOT_DRAW_FOV" name="AIMBOT_DRAW_FOV" <!-- AIMBOT_DRAW_FOV -->><br>
+        <div class="rows">
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">AIMBOT_ENABLED</span>
+              <span class="row-desc">Mira assistita sul nemico più vicino al centro dello schermo.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="AIMBOT_ENABLED" name="AIMBOT_ENABLED" <!-- AIMBOT_ENABLED -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-            <label for="AIMBOT_FOV_COLOR">AIMBOT_FOV_COLOR:</label>
-            <input type="color" id="AIMBOT_FOV_COLOR" name="AIMBOT_FOV_COLOR" value="<!-- AIMBOT_FOV_COLOR -->"><br>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">AIMBOT_ENABLED_WHEN_NOT_SPOTTED</span>
+              <span class="row-desc">Aggancia anche i nemici che non hai ancora visto.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="AIMBOT_ENABLED_WHEN_NOT_SPOTTED" name="AIMBOT_ENABLED_WHEN_NOT_SPOTTED" <!-- AIMBOT_ENABLED_WHEN_NOT_SPOTTED -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-            <label for="AIMBOT_SMOOTH">AIMBOT_SMOOTH:</label>
-            <input type="number" id="AIMBOT_SMOOTH" name="AIMBOT_SMOOTH" value="<!-- AIMBOT_SMOOTH -->"><br>
-        </section>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">AIMBOT_DRAW_FOV</span>
+              <span class="row-desc">Disegna il cerchio entro cui l'aimbot aggancia.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="AIMBOT_DRAW_FOV" name="AIMBOT_DRAW_FOV" <!-- AIMBOT_DRAW_FOV -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
+        </div>
 
-        <section class="proximitySection">
-            <h3>Proximity Alert</h3>
+        <div class="grid grid--after-rows">
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="AIMBOT_FOV">AIMBOT_FOV</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="AIMBOT_FOV" name="AIMBOT_FOV" value="<!-- AIMBOT_FOV -->" min="0" max="10000" step="1" inputmode="decimal">
+          </div>
 
-            <label for="WALLHACK_TOGGLE_KEY">WALLHACK_TOGGLE_KEY:</label>
-            <select id="WALLHACK_TOGGLE_KEY" name="WALLHACK_TOGGLE_KEY">
-                <option value="76" <!-- WALLHACK_KEY_L_SELECTED --> >L</option>
-                <option value="75" <!-- WALLHACK_KEY_K_SELECTED --> >K</option>
-                <option value="112" <!-- WALLHACK_KEY_F1_SELECTED --> >F1</option>
-                <option value="113" <!-- WALLHACK_KEY_F2_SELECTED --> >F2</option>
-                <option value="36" <!-- WALLHACK_KEY_HOME_SELECTED --> >Home</option>
-                <option value="35" <!-- WALLHACK_KEY_END_SELECTED --> >End</option>
-            </select><br>
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="AIMBOT_SMOOTH">AIMBOT_SMOOTH</label>
+              <span class="field-unit">passi</span>
+            </div>
+            <input type="number" id="AIMBOT_SMOOTH" name="AIMBOT_SMOOTH" value="<!-- AIMBOT_SMOOTH -->" min="0" max="1000" step="1" inputmode="decimal" aria-describedby="aimbotHint">
+          </div>
 
-            <label for="PROXIMITY_ALERT_ENABLED">PROXIMITY_ALERT_ENABLED:</label>
-            <input type="checkbox" id="PROXIMITY_ALERT_ENABLED" name="PROXIMITY_ALERT_ENABLED" <!-- PROXIMITY_ALERT_ENABLED -->><br>
+          <div class="field field--wide">
+            <div class="field-top">
+              <label class="field-id" for="AIMBOT_FOV_COLOR">AIMBOT_FOV_COLOR</label>
+              <span class="hex" data-hex-for="AIMBOT_FOV_COLOR">—</span>
+            </div>
+            <input type="color" id="AIMBOT_FOV_COLOR" name="AIMBOT_FOV_COLOR" value="<!-- AIMBOT_FOV_COLOR -->">
+          </div>
+        </div>
 
-            <label for="PROXIMITY_ALERT_DRAW">PROXIMITY_ALERT_DRAW:</label>
-            <input type="checkbox" id="PROXIMITY_ALERT_DRAW" name="PROXIMITY_ALERT_DRAW" <!-- PROXIMITY_ALERT_DRAW -->><br>
+        <p class="note note--neutral" id="aimbotHint"><strong>0 = mira istantanea.</strong> Valori più alti avvicinano la mira in più passi (massimo 16 per frame): il movimento è più graduale, l'aggancio più lento.</p>
+      </section>
 
-            <label for="PROXIMITY_ALERT_RADIUS">PROXIMITY_ALERT_RADIUS:</label>
-            <input type="number" id="PROXIMITY_ALERT_RADIUS" name="PROXIMITY_ALERT_RADIUS" value="<!-- PROXIMITY_ALERT_RADIUS -->"><br>
+      <section class="card" aria-labelledby="sec04">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">04</span>
+          <h2 id="sec04">Allarme prossimità</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+          <span class="head-hint">6 controlli</span>
+        </div>
 
-            <label for="PROXIMITY_ALERT_INTERVAL">PROXIMITY_ALERT_INTERVAL (sec):</label>
-            <input type="number" id="PROXIMITY_ALERT_INTERVAL" name="PROXIMITY_ALERT_INTERVAL" value="<!-- PROXIMITY_ALERT_INTERVAL -->"><br>
+        <div class="field field--wide">
+          <div class="field-top">
+            <label class="field-id" for="WALLHACK_TOGGLE_KEY">WALLHACK_TOGGLE_KEY</label>
+            <span class="field-unit">tasto</span>
+          </div>
+          <div class="select">
+            <select id="WALLHACK_TOGGLE_KEY" name="WALLHACK_TOGGLE_KEY" aria-describedby="toggleKeyHint">
+              <option value="76" <!-- WALLHACK_KEY_L_SELECTED -->>L</option>
+              <option value="75" <!-- WALLHACK_KEY_K_SELECTED -->>K</option>
+              <option value="112" <!-- WALLHACK_KEY_F1_SELECTED -->>F1</option>
+              <option value="113" <!-- WALLHACK_KEY_F2_SELECTED -->>F2</option>
+              <option value="36" <!-- WALLHACK_KEY_HOME_SELECTED -->>Home</option>
+              <option value="35" <!-- WALLHACK_KEY_END_SELECTED -->>End</option>
+            </select>
+          </div>
+          <p class="hint" id="toggleKeyHint">Tasto che accende e spegne l'overlay mentre il gioco è in primo piano.</p>
+        </div>
 
-            <label for="PROXIMITY_ALERT_COLOR">PROXIMITY_ALERT_COLOR:</label>
-            <input type="color" id="PROXIMITY_ALERT_COLOR" name="PROXIMITY_ALERT_COLOR" value="<!-- PROXIMITY_ALERT_COLOR -->"><br>
-        </section>
+        <div class="rows rows--after-field">
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">PROXIMITY_ALERT_ENABLED</span>
+              <span class="row-desc">Un beep quando un nemico entra nel raggio, anche dietro i muri.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="PROXIMITY_ALERT_ENABLED" name="PROXIMITY_ALERT_ENABLED" <!-- PROXIMITY_ALERT_ENABLED -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
 
-        <section class="submitSection">
-            <button type="button" id="submitButton">Submit</button>
-            <p id="statusMessage" style="text-align:center; min-height:1.2em; margin:10px 0 0 0;"></p>
-        </section>
+          <label class="row">
+            <span class="row-copy">
+              <span class="row-name">PROXIMITY_ALERT_DRAW</span>
+              <span class="row-desc">Mostra il raggio dell'allarme sull'overlay.</span>
+            </span>
+            <span class="sw">
+              <input type="checkbox" id="PROXIMITY_ALERT_DRAW" name="PROXIMITY_ALERT_DRAW" <!-- PROXIMITY_ALERT_DRAW -->>
+              <span class="sw-ui" aria-hidden="true"></span>
+            </span>
+          </label>
+        </div>
+
+        <div class="grid grid--after-rows">
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="PROXIMITY_ALERT_RADIUS">PROXIMITY_ALERT_RADIUS</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="PROXIMITY_ALERT_RADIUS" name="PROXIMITY_ALERT_RADIUS" value="<!-- PROXIMITY_ALERT_RADIUS -->" min="0" max="10000" step="1" inputmode="decimal" aria-describedby="proximityHint">
+          </div>
+
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="PROXIMITY_ALERT_INTERVAL">PROXIMITY_ALERT_INTERVAL</label>
+              <span class="field-unit">s</span>
+            </div>
+            <input type="number" id="PROXIMITY_ALERT_INTERVAL" name="PROXIMITY_ALERT_INTERVAL" value="<!-- PROXIMITY_ALERT_INTERVAL -->" min="0" max="3600" step="0.1" inputmode="decimal" aria-describedby="proximityHint">
+          </div>
+
+          <div class="field field--wide">
+            <div class="field-top">
+              <label class="field-id" for="PROXIMITY_ALERT_COLOR">PROXIMITY_ALERT_COLOR</label>
+              <span class="hex" data-hex-for="PROXIMITY_ALERT_COLOR">—</span>
+            </div>
+            <input type="color" id="PROXIMITY_ALERT_COLOR" name="PROXIMITY_ALERT_COLOR" value="<!-- PROXIMITY_ALERT_COLOR -->">
+          </div>
+        </div>
+
+        <p class="note note--neutral" id="proximityHint">Il raggio si misura dal centro dello schermo al bordo inferiore del nemico. L'intervallo è il tempo minimo tra due beep per lo stesso nemico.</p>
+      </section>
+
+      <section class="card" aria-labelledby="sec05">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">05</span>
+          <h2 id="sec05">Programma</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+          <span class="head-hint">3 controlli</span>
+          <span class="badge">richiede riavvio</span>
+        </div>
+
+        <div class="grid">
+          <div class="field field--wide">
+            <div class="field-top">
+              <label class="field-id" for="SERVER_PORT">SERVER_PORT</label>
+              <span class="url-chip" id="portUrl">http://127.0.0.1:—/</span>
+            </div>
+            <input type="number" id="SERVER_PORT" name="SERVER_PORT" value="<!-- SERVER_PORT -->" min="1" max="65535" step="1" inputmode="numeric" aria-describedby="programHint">
+          </div>
+
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="DISPLAY_WIDTH">DISPLAY_WIDTH</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="DISPLAY_WIDTH" name="DISPLAY_WIDTH" value="<!-- DISPLAY_WIDTH -->" min="1" max="10000" step="1" inputmode="numeric" aria-describedby="programHint">
+          </div>
+
+          <div class="field">
+            <div class="field-top">
+              <label class="field-id" for="DISPLAY_HEIGHT">DISPLAY_HEIGHT</label>
+              <span class="field-unit">px</span>
+            </div>
+            <input type="number" id="DISPLAY_HEIGHT" name="DISPLAY_HEIGHT" value="<!-- DISPLAY_HEIGHT -->" min="1" max="10000" step="1" inputmode="numeric" aria-describedby="programHint">
+          </div>
+        </div>
+
+        <p class="note" id="programHint">Porta HTTP e finestra dell'overlay vengono create all'avvio: queste tre impostazioni hanno effetto dal prossimo avvio del tool. Larghezza e altezza devono corrispondere alla risoluzione della finestra di gioco.</p>
+      </section>
+
     </form>
+  </main>
 
-    <script>
-        async function sendSettings() {
-            const form = document.getElementById("settingsForm");
-            const button = document.getElementById("submitButton");
-            const status = document.getElementById("statusMessage");
-            const formData = new FormData(form);
+  <aside class="side" aria-label="Anteprima e note">
+    <div class="side-inner">
 
-            // Unchecked boxes are not sent by the browser: send them explicitly
-            // so the server can tell "off" from "missing".
-            form.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                if (!checkbox.checked) {
-                    formData.append(checkbox.name, "off");
-                }
-            });
+      <section class="card card--preview" aria-labelledby="previewTitle">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">00</span>
+          <h2 id="previewTitle">Anteprima live</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+          <span class="live"><span class="live-dot" aria-hidden="true"></span>live</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="preview" role="img" aria-label="Anteprima dell'overlay: riquadro, ossa, testa, barra della vita, testo e cerchi di FOV e allarme"></canvas>
+          <span class="canvas-badge" id="canvasBadge">— × —</span>
+        </div>
+        <p class="preview-caption">
+          <span>Schermo intero, scala ridotta.</span>
+          <span id="sampleHealth">Vita di esempio: 78.</span>
+          <span>Gli elementi spenti non vengono disegnati.</span>
+        </p>
+      </section>
 
-            // The page is normally served by the tool itself. When it is opened
-            // from disk there is no origin to resolve '/' against, so fall back
-            // to the configured port on localhost.
-            const isHttp = location.protocol === "http:" || location.protocol === "https:";
-            const port = (document.getElementById("SERVER_PORT").value || "").trim();
-            const url = isHttp ? "/" : "http://127.0.0.1:" + port + "/";
+      <section class="card" aria-labelledby="tipsTitle">
+        <div class="card-head">
+          <span class="index" aria-hidden="true">i</span>
+          <h2 id="tipsTitle">Note rapide</h2>
+          <span class="head-rule" aria-hidden="true"></span>
+        </div>
+        <ul class="tips-list">
+          <li><span><span class="key-row"><kbd>Ctrl</kbd><kbd>S</kbd></span> salva da qualsiasi punto della pagina.</span></li>
+          <li><span>Le impostazioni sono archiviate in <span class="path">src\server\settings.bin</span>.</span></li>
+          <li><span>I colori vengono disegnati così come sono: nero significa elemento invisibile.</span></li>
+          <li><span>Il tool continua a girare mentre modifichi: l'overlay usa i nuovi valori senza riavvio.</span></li>
+        </ul>
+      </section>
 
-            // The handler used to be registered twice (inline onclick + a second
-            // listener), which fired two POSTs per click and could make one of
-            // them fail against the single-threaded server.
-            button.disabled = true;
-            status.textContent = "Saving...";
+    </div>
+  </aside>
+</div>
 
+<footer class="footer">
+  <span>server locale</span>
+  <span class="dot" aria-hidden="true">•</span>
+  <span class="endpoint" id="endpoint">127.0.0.1:—</span>
+</footer>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var form = document.getElementById('settingsForm');
+  if (!form) {
+    return;
+  }
+
+  var saveBtn = document.getElementById('saveBtn');
+  var discardBtn = document.getElementById('discardBtn');
+  var stateEl = document.getElementById('state');
+  var stateText = document.getElementById('stateText');
+  var toasts = document.getElementById('toasts');
+  var endpoint = document.getElementById('endpoint');
+  var portUrl = document.getElementById('portUrl');
+  var canvasBadge = document.getElementById('canvasBadge');
+  var canvas = document.getElementById('preview');
+
+  var ctx = null;
+  try {
+    ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+  } catch (error) {
+    ctx = null;
+  }
+
+  var TAU = Math.PI * 2;
+  var MONO = '"Cascadia Code","Cascadia Mono","JetBrains Mono",Consolas,monospace';
+
+  var busy = false;
+  var failed = false;
+  var discarding = false;
+  var baseState = '';
+  var rafId = 0;
+  var healthSample = 78;
+  var currentKind = 'saved';
+  var controller = null;
+  var timeoutId = 0;
+  var compactQuery = null;
+
+  function byId(id) {
+    return document.getElementById(id);
+  }
+
+  function clamp(value, min, max) {
+    if (!isFinite(value)) {
+      return min;
+    }
+    return value < min ? min : (value > max ? max : value);
+  }
+
+  function readNumber(id, fallback, min, max) {
+    var node = byId(id);
+    var value = node ? parseFloat(node.value) : NaN;
+    if (!isFinite(value)) {
+      return fallback;
+    }
+    return clamp(value, min, max);
+  }
+
+  function isOn(id) {
+    var node = byId(id);
+    return !!(node && node.checked);
+  }
+
+  function readColor(id, fallback) {
+    var node = byId(id);
+    var value = node && typeof node.value === 'string' ? node.value.trim() : '';
+    return /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback;
+  }
+
+  function describe(error) {
+    if (error && error.message) {
+      return String(error.message);
+    }
+    return 'richiesta non riuscita';
+  }
+
+  function snapshot() {
+    var nodes = form.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="color"], select');
+    var parts = [];
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      if (!node.name) {
+        continue;
+      }
+      if (node.type === 'checkbox') {
+        parts.push(node.name + '=' + (node.checked ? '1' : '0'));
+      } else {
+        parts.push(node.name + '=' + node.value);
+      }
+    }
+    return parts.join('\u0001');
+  }
+
+  function isDirty() {
+    return snapshot() !== baseState;
+  }
+
+  function refresh() {
+    var dirty = isDirty();
+    if (saveBtn) {
+      saveBtn.disabled = busy || !dirty;
+    }
+    if (discardBtn) {
+      discardBtn.disabled = busy || !dirty;
+    }
+    var kind = 'saved';
+    if (busy) {
+      kind = 'saving';
+    } else if (failed) {
+      kind = 'error';
+    } else if (dirty) {
+      kind = 'dirty';
+    }
+    setState(kind);
+    document.body.classList.toggle('is-dirty', dirty);
+  }
+
+  function stateLabels() {
+    if (compactQuery && compactQuery.matches) {
+      // Short labels on narrow phones: the chip must stay the readable one.
+      return {
+        saved: 'Salvato',
+        dirty: 'Da salvare',
+        saving: 'Salvo…',
+        error: 'Errore'
+      };
+    }
+    return {
+      saved: 'Tutto salvato',
+      dirty: 'Modifiche non salvate',
+      saving: 'Salvataggio…',
+      error: 'Errore'
+    };
+  }
+
+  function setState(kind) {
+    currentKind = kind;
+    var labels = stateLabels();
+    if (stateEl && stateEl.getAttribute('data-state') !== kind) {
+      stateEl.setAttribute('data-state', kind);
+    }
+    if (stateText && stateText.textContent !== labels[kind]) {
+      stateText.textContent = labels[kind];
+    }
+  }
+
+  function refreshMeta() {
+    var portNode = byId('SERVER_PORT');
+    var port = portNode ? String(portNode.value || '').trim() : '';
+    if (endpoint) {
+      endpoint.textContent = '127.0.0.1:' + (port || '—');
+    }
+    if (portUrl) {
+      portUrl.textContent = port ? ('http://127.0.0.1:' + port + '/') : 'http://127.0.0.1:—/';
+    }
+    if (canvasBadge) {
+      var widthNode = byId('DISPLAY_WIDTH');
+      var heightNode = byId('DISPLAY_HEIGHT');
+      var width = widthNode ? Math.round(parseFloat(widthNode.value)) : NaN;
+      var height = heightNode ? Math.round(parseFloat(heightNode.value)) : NaN;
+      if (isFinite(width) && isFinite(height) && width > 0 && height > 0) {
+        canvasBadge.textContent = width + ' × ' + height;
+      } else {
+        canvasBadge.textContent = '— × —';
+      }
+    }
+    var sample = byId('sampleHealth');
+    if (sample) {
+      var label = 'Vita di esempio: ' + healthSample + '.';
+      if (sample.textContent !== label) {
+        sample.textContent = label;
+      }
+    }
+  }
+
+  function syncHexLabels() {
+    var labels = form.querySelectorAll('[data-hex-for]');
+    for (var i = 0; i < labels.length; i++) {
+      var target = byId(labels[i].getAttribute('data-hex-for'));
+      var value = target && target.value ? String(target.value).toUpperCase() : '';
+      var text = value || '—';
+      if (labels[i].textContent !== text) {
+        labels[i].textContent = text;
+      }
+    }
+  }
+
+  function tidyNumbers() {
+    var nodes = form.querySelectorAll('input[type="number"]');
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var raw = String(node.value || '').trim();
+      if (!/^-?\d+(\.\d+)?$/.test(raw) || raw.indexOf('.') === -1) {
+        continue;
+      }
+      var cleaned = raw.replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+      if (cleaned !== '' && cleaned !== raw) {
+        node.value = cleaned;
+      }
+    }
+  }
+
+  function toast(kind, message) {
+    if (!toasts) {
+      return;
+    }
+    var node = document.createElement('div');
+    node.className = 'toast';
+    node.setAttribute('data-kind', kind === 'ok' ? 'ok' : 'error');
+    var title = document.createElement('strong');
+    title.textContent = kind === 'ok' ? 'Salvato' : 'Salvataggio non riuscito';
+    var body = document.createElement('p');
+    body.textContent = message;
+    node.appendChild(title);
+    node.appendChild(body);
+    node.addEventListener('click', function () {
+      if (node.parentNode) {
+        node.parentNode.removeChild(node);
+      }
+    });
+    toasts.appendChild(node);
+    while (toasts.children.length > 3 && toasts.firstElementChild) {
+      toasts.removeChild(toasts.firstElementChild);
+    }
+    window.setTimeout(function () {
+      if (node.parentNode) {
+        node.parentNode.removeChild(node);
+      }
+    }, kind === 'ok' ? 3400 : 9000);
+  }
+
+  function postUrl() {
+    if (location.protocol === 'http:' || location.protocol === 'https:') {
+      return '/';
+    }
+    var portNode = byId('SERVER_PORT');
+    var port = portNode ? String(portNode.value || '').trim() : '';
+    return 'http://127.0.0.1:' + port + '/';
+  }
+
+  function finishRequest() {
+    if (timeoutId && window.clearTimeout) {
+      window.clearTimeout(timeoutId);
+    }
+    timeoutId = 0;
+    controller = null;
+    busy = false;
+  }
+
+  function save() {
+    if (busy) {
+      return;
+    }
+    busy = true;
+    failed = false;
+    refresh();
+
+    // Snapshot of what is actually sent: anything typed while the request is
+    // in flight must stay dirty once the response lands.
+    var sent = snapshot();
+
+    var data;
+    try {
+      data = new FormData(form);
+    } catch (error) {
+      data = new FormData();
+    }
+
+    var checks = form.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checks.length; i++) {
+      if (!checks[i].checked) {
+        data.append(checks[i].name, 'off');
+      }
+    }
+
+    var options = {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'text/plain' }
+    };
+
+    var request;
+    try {
+      if (typeof AbortController === 'function') {
+        controller = new AbortController();
+        options.signal = controller.signal;
+        // A stalled tool must not leave both buttons disabled forever.
+        timeoutId = window.setTimeout(function () {
+          timeoutId = 0;
+          if (controller) {
             try {
-                const response = await fetch(url, { method: "POST", body: formData });
-                const text = (await response.text()).trim();
-
-                if (!response.ok) {
-                    throw new Error(text || ("HTTP " + response.status));
-                }
-
-                status.textContent = "Settings updated.";
-                alert("Settings updated successfully!");
+              controller.abort();
             } catch (error) {
-                console.error("Error updating settings:", error);
-                status.textContent = error.message;
-                alert("Error updating settings:\n" + error.message);
-            } finally {
-                button.disabled = false;
+              // The rejection handler below reports the timeout.
             }
-        }
+          }
+        }, 10000);
+      }
+      request = fetch(postUrl(), options);
+    } catch (error) {
+      finishRequest();
+      failed = true;
+      refresh();
+      toast('error', 'ERROR: ' + describe(error));
+      return;
+    }
 
-        document.getElementById("submitButton").addEventListener("click", sendSettings);
-    </script>
+    request.then(function (response) {
+      return response.text().then(function (text) {
+        return { response: response, text: text };
+      });
+    }).then(function (result) {
+      var text = String(result.text || '').trim();
+      var ok = result.response.ok;
+      if (ok) {
+        baseState = sent;
+        failed = false;
+      } else {
+        failed = true;
+      }
+      finishRequest();
+      refresh();
+      if (ok) {
+        toast('ok', text || 'OK: settings updated');
+      } else {
+        toast('error', text || ('ERROR: HTTP ' + result.response.status));
+      }
+    }, function (error) {
+      var aborted = !!(error && error.name === 'AbortError');
+      finishRequest();
+      failed = true;
+      refresh();
+      toast('error', aborted ? 'ERROR: richiesta scaduta dopo 10 secondi' : 'ERROR: ' + describe(error));
+    });
+  }
 
+  function onEdit(event) {
+    failed = false;
+    if (event && event.target && event.target.type === 'color') {
+      syncHexLabels();
+    }
+    refreshMeta();
+    refresh();
+    scheduleDraw();
+  }
+
+  function scheduleDraw() {
+    if (!canvas || rafId) {
+      return;
+    }
+    rafId = window.requestAnimationFrame(function () {
+      rafId = 0;
+      draw();
+    });
+  }
+
+  function draw() {
+    if (!canvas || !ctx) {
+      return;
+    }
+    var width = canvas.clientWidth;
+    var height = canvas.clientHeight;
+    if (!width || !height) {
+      return;
+    }
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var backingWidth = Math.max(1, Math.round(width * dpr));
+    var backingHeight = Math.max(1, Math.round(height * dpr));
+    if (canvas.width !== backingWidth) {
+      canvas.width = backingWidth;
+    }
+    if (canvas.height !== backingHeight) {
+      canvas.height = backingHeight;
+    }
+    try {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      paint(ctx, width, height);
+    } catch (error) {
+      try {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } catch (ignored) {
+        return;
+      }
+    }
+  }
+
+  function paint(ctx, W, H) {
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    ctx.setLineDash([]);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    var displayWidth = readNumber('DISPLAY_WIDTH', 1920, 320, 10000);
+    var displayHeight = readNumber('DISPLAY_HEIGHT', 1080, 240, 10000);
+
+    // The canvas shows the whole display, scaled down: every screen-space size
+    // is multiplied by one consistent factor, so the drawing keeps the same
+    // proportions as the real overlay. Everything is clamped below: a wild
+    // number in a field must never be able to break the drawing.
+    var scale = clamp(W / displayWidth, 0.05, 1.4);
+
+    var boxHeightWorld = readNumber('BOX_HEIGHT', 0, 0, 1000);
+    var ratio = readNumber('BOX_HEIGHT_WIDTH_RATIO', 0, 0, 10);
+
+    // A typical enemy at a representative distance: the box is anchored on the
+    // head, so its screen height follows the world height.
+    var screenHeight = boxHeightWorld * (displayHeight / 200);
+    var boxHeight = clamp(screenHeight * scale, 0, H * 0.9);
+    var boxWidth = clamp(boxHeight * ratio, 0, W * 1.6);
+
+    var bottom = H * 0.9;
+    var top = bottom - boxHeight;
+    var centerX = W * 0.56;
+    var left = centerX - boxWidth * 0.5;
+    var right = centerX + boxWidth * 0.5;
+
+    drawScene(ctx, W, H);
+
+    var hasBox = boxWidth >= 2 && boxHeight >= 2;
+    if (hasBox) {
+      drawSilhouette(ctx, left, top, right, bottom);
+      if (isOn('DRAW_BOX')) {
+        drawBox(ctx, left, top, right, bottom,
+          strokeFor(readNumber('BOX_THICKNESS', 0, 0, 100), scale, H),
+          readColor('BOX_COLOR', '#ff5f5f'));
+      }
+      var barThickness = lineStrokeFor(readNumber('HEALTH_BAR_THICKNESS', 0, 0, 100), scale, H);
+      if (isOn('DRAW_HEALTH_BAR') && barThickness > 0) {
+        drawHealthBar(ctx, left, top, right, bottom, barThickness);
+      }
+      if (isOn('DRAW_TEXT')) {
+        drawHealthText(ctx, left, top, scale);
+      }
+      var boneThickness = lineStrokeFor(readNumber('BONES_THICKNESS', 0, 0, 100), scale, H);
+      if (isOn('DRAW_BONES') && boneThickness > 0) {
+        drawBones(ctx, left, top, right, bottom,
+          readColor('BONES_COLOR', '#c9f24d'),
+          boneThickness);
+      }
+      if (isOn('DRAW_HEAD')) {
+        drawHead(ctx, centerX, top, boxWidth, readColor('HEAD_COLOR', '#c9f24d'));
+      }
+    }
+
+    if (isOn('AIMBOT_ENABLED')) {
+      if (isOn('AIMBOT_DRAW_FOV')) {
+        drawCircle(ctx, W * 0.5, H * 0.5,
+          clamp(readNumber('AIMBOT_FOV', 0, 0, 10000) * scale, 1, W * 2),
+          readColor('AIMBOT_FOV_COLOR', '#c9f24d'), 1, false, 1);
+      }
+    }
+
+    if (isOn('PROXIMITY_ALERT_ENABLED') && isOn('PROXIMITY_ALERT_DRAW')) {
+      drawCircle(ctx, W * 0.5, H * 0.5,
+        clamp(readNumber('PROXIMITY_ALERT_RADIUS', 0, 0, 10000) * scale, 1, W * 2),
+        readColor('PROXIMITY_ALERT_COLOR', '#ffb457'), 1, true, 0.9);
+    }
+  }
+
+  function strokeFor(value, scale, canvasHeight) {
+    // Zero is drawn as one pixel, like drawRect() does upstream; above that the
+    // stroke is the real value in preview pixels, capped relative to the canvas
+    // so a 100 px setting cannot swallow the whole drawing.
+    return clamp(value * scale, 1, Math.max(4, canvasHeight * 0.1));
+  }
+
+  function lineStrokeFor(value, scale, canvasHeight) {
+    // drawLine() hands the thickness straight to ImGui and has no clamp (only
+    // drawRect() rounds up to one pixel), so a line thinner than half a pixel
+    // is not rendered at all. The test is on the thickness the overlay
+    // receives, not on the scaled preview width: at this scale a strict cut on
+    // the scaled value would erase the tool's own defaults (1 px bones, 2 px
+    // bar) even though they are clearly visible in game.
+    if (!(value >= 0.5)) {
+      return 0;
+    }
+    return clamp(value * scale, 1, Math.max(4, canvasHeight * 0.1));
+  }
+
+  function drawScene(ctx, W, H) {
+    var sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#0d141f');
+    sky.addColorStop(0.52, '#0a1018');
+    sky.addColorStop(1, '#05080c');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    var horizon = H * 0.63;
+
+    var glow = ctx.createRadialGradient(W * 0.5, horizon, 0, W * 0.5, horizon, Math.max(H * 0.72, W * 0.5));
+    glow.addColorStop(0, 'rgba(116,148,186,0.17)');
+    glow.addColorStop(0.45, 'rgba(60,84,116,0.07)');
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = 'rgba(150,178,210,0.05)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (var i = 0; i <= 8; i++) {
+      var x = Math.round((W / 8) * i) + 0.5;
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, horizon);
+    }
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(140,170,205,0.075)';
+    ctx.beginPath();
+    for (var j = -7; j <= 7; j++) {
+      ctx.moveTo(W * 0.5, horizon);
+      ctx.lineTo(W * 0.5 + j * W * 0.19, H);
+    }
+    for (var k = 1; k <= 7; k++) {
+      var t = k / 7;
+      var y = horizon + (H - horizon) * t * t;
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+    }
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(18,25,36,0.6)';
+    ctx.fillRect(W * 0.05, horizon - H * 0.29, W * 0.12, H * 0.29);
+    ctx.fillRect(W * 0.81, horizon - H * 0.21, W * 0.1, H * 0.21);
+
+    var vignette = ctx.createRadialGradient(
+      W * 0.5, H * 0.48, Math.min(W, H) * 0.26,
+      W * 0.5, H * 0.48, Math.max(W, H) * 0.8
+    );
+    vignette.addColorStop(0, 'rgba(0,0,0,0)');
+    vignette.addColorStop(1, 'rgba(0,0,0,0.55)');
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0, 0, W, H);
+
+    var cx = Math.round(W * 0.5) + 0.5;
+    var cy = Math.round(H * 0.5) + 0.5;
+    var gap = Math.max(3, W * 0.014);
+    var len = Math.max(4, W * 0.018);
+    ctx.strokeStyle = 'rgba(231,237,245,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx - gap - len, cy);
+    ctx.lineTo(cx - gap, cy);
+    ctx.moveTo(cx + gap, cy);
+    ctx.lineTo(cx + gap + len, cy);
+    ctx.moveTo(cx, cy - gap - len);
+    ctx.lineTo(cx, cy - gap);
+    ctx.moveTo(cx, cy + gap);
+    ctx.lineTo(cx, cy + gap + len);
+    ctx.stroke();
+  }
+
+  function drawSilhouette(ctx, left, top, right, bottom) {
+    var w = right - left;
+    var h = bottom - top;
+    var cx = (left + right) * 0.5;
+
+    var shadow = ctx.createRadialGradient(cx, bottom, 0, cx, bottom, Math.max(6, w * 1.05));
+    shadow.addColorStop(0, 'rgba(0,0,0,0.5)');
+    shadow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = shadow;
+    ctx.beginPath();
+    ctx.ellipse(cx, bottom, Math.max(6, w * 0.85), Math.max(2, w * 0.24), 0, 0, TAU);
+    ctx.fill();
+
+    var body = ctx.createLinearGradient(left, top, right, bottom);
+    body.addColorStop(0, 'rgba(46,60,81,0.96)');
+    body.addColorStop(0.6, 'rgba(27,36,50,0.96)');
+    body.addColorStop(1, 'rgba(15,21,30,0.96)');
+
+    ctx.fillStyle = body;
+    ctx.strokeStyle = 'rgba(168,193,222,0.2)';
+    ctx.lineWidth = 1;
+
+    var headRadius = Math.max(2.2, w * 0.15);
+    ctx.beginPath();
+    ctx.arc(cx, top + h * 0.1, headRadius, 0, TAU);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx - w * 0.26, top + h * 0.2);
+    ctx.lineTo(cx + w * 0.26, top + h * 0.2);
+    ctx.lineTo(cx + w * 0.2, top + h * 0.55);
+    ctx.lineTo(cx - w * 0.2, top + h * 0.55);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx - w * 0.19, top + h * 0.53);
+    ctx.lineTo(cx - w * 0.02, top + h * 0.53);
+    ctx.lineTo(cx - w * 0.06, bottom - h * 0.01);
+    ctx.lineTo(cx - w * 0.21, bottom - h * 0.01);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx + w * 0.02, top + h * 0.53);
+    ctx.lineTo(cx + w * 0.19, top + h * 0.53);
+    ctx.lineTo(cx + w * 0.21, bottom - h * 0.01);
+    ctx.lineTo(cx + w * 0.06, bottom - h * 0.01);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx - w * 0.24, top + h * 0.22);
+    ctx.lineTo(cx - w * 0.34, top + h * 0.53);
+    ctx.lineTo(cx - w * 0.24, top + h * 0.55);
+    ctx.lineTo(cx - w * 0.15, top + h * 0.25);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx + w * 0.24, top + h * 0.22);
+    ctx.lineTo(cx + w * 0.34, top + h * 0.53);
+    ctx.lineTo(cx + w * 0.24, top + h * 0.55);
+    ctx.lineTo(cx + w * 0.15, top + h * 0.25);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  function drawBox(ctx, left, top, right, bottom, thickness, color) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = thickness;
+    ctx.strokeRect(left, top, Math.max(1, right - left), Math.max(1, bottom - top));
+  }
+
+  function drawHealthBar(ctx, left, top, right, bottom, thickness) {
+    var ratio = clamp(healthSample, 0, 100) / 100;
+    var green = Math.round(clamp(healthSample, 0, 100) * 2.55);
+    var red = Math.round(clamp(255 - (clamp(healthSample, 0, 100) * 2.55) * 0.5, 0, 255));
+    ctx.strokeStyle = 'rgb(' + red + ',' + green + ',0)';
+    ctx.lineWidth = thickness;
+    ctx.beginPath();
+    ctx.moveTo(left, bottom);
+    ctx.lineTo(left, bottom - (bottom - top) * ratio);
+    ctx.stroke();
+  }
+
+  function drawHealthText(ctx, left, top, scale) {
+    var size = Math.max(9, Math.min(15, 13 * scale));
+    ctx.save();
+    ctx.fillStyle = readColor('TEXT_COLOR', '#e7edf5');
+    ctx.font = '600 ' + size.toFixed(1) + 'px ' + MONO;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.shadowColor = 'rgba(0,0,0,0.85)';
+    ctx.shadowBlur = 3;
+    ctx.fillText(String(healthSample), left, top - Math.max(5, 10 * scale));
+    ctx.restore();
+  }
+
+  function drawBones(ctx, left, top, right, bottom, color, thickness) {
+    var w = right - left;
+    var h = bottom - top;
+    var cx = (left + right) * 0.5;
+
+    var head = [cx, top + h * 0.07];
+    var neck = [cx, top + h * 0.19];
+    var pelvis = [cx, top + h * 0.54];
+    var lShoulder = [cx - w * 0.27, top + h * 0.25];
+    var rShoulder = [cx + w * 0.27, top + h * 0.25];
+    var lElbow = [cx - w * 0.35, top + h * 0.41];
+    var rElbow = [cx + w * 0.35, top + h * 0.41];
+    var lHand = [cx - w * 0.31, top + h * 0.57];
+    var rHand = [cx + w * 0.31, top + h * 0.57];
+    var lHip = [cx - w * 0.15, top + h * 0.54];
+    var rHip = [cx + w * 0.15, top + h * 0.54];
+    var lKnee = [cx - w * 0.17, top + h * 0.77];
+    var rKnee = [cx + w * 0.17, top + h * 0.77];
+    var lFoot = [cx - w * 0.19, bottom];
+    var rFoot = [cx + w * 0.19, bottom];
+
+    var segments = [
+      head, neck,
+      neck, pelvis,
+      lShoulder, rShoulder,
+      neck, lShoulder,
+      neck, rShoulder,
+      lShoulder, lElbow,
+      lElbow, lHand,
+      rShoulder, rElbow,
+      rElbow, rHand,
+      pelvis, lHip,
+      pelvis, rHip,
+      lHip, lKnee,
+      lKnee, lFoot,
+      rHip, rKnee,
+      rKnee, rFoot
+    ];
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = thickness;
+    ctx.beginPath();
+    for (var i = 0; i < segments.length; i += 2) {
+      ctx.moveTo(segments[i][0], segments[i][1]);
+      ctx.lineTo(segments[i + 1][0], segments[i + 1][1]);
+    }
+    ctx.stroke();
+  }
+
+  function drawHead(ctx, centerX, top, boxWidth, color) {
+    var radius = clamp(boxWidth * 0.25, 2, 4000);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(centerX, top, radius, 0, TAU);
+    ctx.stroke();
+  }
+
+  function drawCircle(ctx, x, y, radius, color, thickness, dashed, opacity) {
+    ctx.save();
+    ctx.globalAlpha = opacity;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = thickness;
+    if (dashed) {
+      ctx.setLineDash([4, 4]);
+    } else {
+      ctx.setLineDash([]);
+    }
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, TAU);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  form.addEventListener('input', onEdit);
+  form.addEventListener('change', onEdit);
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    save();
+  });
+
+  if (discardBtn) {
+    discardBtn.addEventListener('click', function () {
+      // Reloading is the discard: it must not trip the leave-site prompt.
+      discarding = true;
+      location.reload();
+      // If the reload is blocked, re-arm the guard instead of leaving it off
+      // for the rest of the session.
+      window.setTimeout(function () {
+        discarding = false;
+      }, 1000);
+    });
+  }
+
+  window.addEventListener('keydown', function (event) {
+    var key = event.key ? String(event.key).toLowerCase() : '';
+    if (key === 'escape' || key === 'esc') {
+      if (toasts && toasts.lastElementChild) {
+        toasts.removeChild(toasts.lastElementChild);
+      }
+      return;
+    }
+    if ((event.ctrlKey || event.metaKey) && !event.altKey && key === 's') {
+      event.preventDefault();
+      if (!busy && isDirty()) {
+        save();
+      }
+    }
+  });
+
+  window.addEventListener('beforeunload', function (event) {
+    if (discarding || !isDirty()) {
+      return;
+    }
+    event.preventDefault();
+    event.returnValue = '';
+    return '';
+  });
+
+  window.addEventListener('resize', scheduleDraw);
+
+  if (window.ResizeObserver && canvas) {
+    try {
+      new window.ResizeObserver(scheduleDraw).observe(canvas);
+    } catch (error) {
+      // The resize listener above is the fallback.
+    }
+  }
+
+  if (window.matchMedia) {
+    compactQuery = window.matchMedia('(max-width: 420px)');
+    var onCompactChange = function () {
+      setState(currentKind);
+    };
+    if (compactQuery.addEventListener) {
+      compactQuery.addEventListener('change', onCompactChange);
+    } else if (compactQuery.addListener) {
+      compactQuery.addListener(onCompactChange);
+    }
+  }
+
+  tidyNumbers();
+  syncHexLabels();
+  refreshMeta();
+  baseState = snapshot();
+  refresh();
+
+  if (document.readyState === 'complete') {
+    scheduleDraw();
+  } else {
+    window.addEventListener('load', scheduleDraw);
+  }
+  scheduleDraw();
+})();
+</script>
 </body>
 </html>
